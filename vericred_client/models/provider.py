@@ -63,7 +63,8 @@ class Provider(object):
             'suffix': 'str',
             'title': 'str',
             'type': 'str',
-            'zip_code': 'str'
+            'zip_code': 'str',
+            'npi': 'str'
         }
 
         self.attribute_map = {
@@ -93,7 +94,8 @@ class Provider(object):
             'suffix': 'suffix',
             'title': 'title',
             'type': 'type',
-            'zip_code': 'zip_code'
+            'zip_code': 'zip_code',
+            'npi': 'npi'
         }
 
         self._accepting_change_of_payor_patients = None
@@ -123,6 +125,7 @@ class Provider(object):
         self._title = None
         self._type = None
         self._zip_code = None
+        self._npi = None
 
     @property
     def accepting_change_of_payor_patients(self):
@@ -343,6 +346,26 @@ class Provider(object):
         :type: list[str]
         """
         self._hios_ids = hios_ids
+
+    @property
+    def npi(self):
+        """
+        Gets the npi of this Provider.
+
+        :return: The npi of this Provider.
+        :rtype: str
+        """
+        return self.npi
+
+    @npi.setter
+    def npi(self, npi):
+        """
+        Sets the npi of this Provider.
+
+        :param npi: The npi of this Provider.
+        :type: str
+        """
+        self._npi = npi
 
     @property
     def id(self):

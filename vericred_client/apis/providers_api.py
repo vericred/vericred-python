@@ -129,18 +129,18 @@ class ProvidersApi(object):
         """
         Find Providers
         All `Provider` searches require a `zip_code`, which we use for weighting
-the search results to favor `Provider`s that are near the user.  For example,
-we would want "Dr. John Smith" who is 5 miles away to appear before
-"Dr. John Smith" who is 100 miles away.
+        the search results to favor `Provider`s that are near the user.  For example,
+        we would want "Dr. John Smith" who is 5 miles away to appear before
+        "Dr. John Smith" who is 100 miles away.
 
-The weighting also allows for non-exact matches.  In our prior example, we
-would want "Dr. Jon Smith" who is 2 miles away to appear before the exact
-match "Dr. John Smith" who is 100 miles away because it is more likely that
-the user just entered an incorrect name.
+        The weighting also allows for non-exact matches.  In our prior example, we
+        would want "Dr. Jon Smith" who is 2 miles away to appear before the exact
+        match "Dr. John Smith" who is 100 miles away because it is more likely that
+        the user just entered an incorrect name.
 
-The free text search also supports Specialty name search and "body part"
-Specialty name search.  So, searching "John Smith nose" would return
-"Dr. John Smith", the ENT Specialist before "Dr. John Smith" the Internist.
+        The free text search also supports Specialty name search and "body part"
+        Specialty name search.  So, searching "John Smith nose" would return
+        "Dr. John Smith", the ENT Specialist before "Dr. John Smith" the Internist.
 
 
         This method makes a synchronous HTTP request by default. To make an
