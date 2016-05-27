@@ -355,7 +355,7 @@ class Provider(object):
         :return: The npi of this Provider.
         :rtype: str
         """
-        return self.npi
+        return self._npi
 
     @npi.setter
     def npi(self, npi):
