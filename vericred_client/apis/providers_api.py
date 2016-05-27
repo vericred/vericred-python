@@ -159,7 +159,7 @@ Specialty name search.  So, searching "John Smith nose" would return
                  returns the request thread.
         """
 
-        all_params = ['body']
+        all_params = ['body', 'vericred_api_key']
         all_params.append('callback')
 
         params = locals()
@@ -179,6 +179,8 @@ Specialty name search.  So, searching "John Smith nose" would return
         query_params = {}
 
         header_params = {}
+        if 'vericred_api_key' in params:
+            header_params['Vericred-Api-Key'] = params['vericred_api_key']
 
         form_params = []
         local_var_files = {}
