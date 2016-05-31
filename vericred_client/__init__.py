@@ -13,6 +13,8 @@ from .models.drug_coverage_response import DrugCoverageResponse
 from .models.drug_package import DrugPackage
 from .models.drug_search_response import DrugSearchResponse
 from .models.meta import Meta
+from .models.network import Network
+from .models.network_search_response import NetworkSearchResponse
 from .models.plan import Plan
 from .models.plan_county import PlanCounty
 from .models.plan_county_bulk import PlanCountyBulk
@@ -35,6 +37,7 @@ from .models.zip_county_response import ZipCountyResponse
 
 # import apis into sdk package
 from .apis.drugs_api import DrugsApi
+from .apis.networks_api import NetworksApi
 from .apis.plans_api import PlansApi
 from .apis.providers_api import ProvidersApi
 from .apis.zip_counties_api import ZipCountiesApi

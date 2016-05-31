@@ -13,6 +13,8 @@ from .drug_coverage_response import DrugCoverageResponse
 from .drug_package import DrugPackage
 from .drug_search_response import DrugSearchResponse
 from .meta import Meta
+from .network import Network
+from .network_search_response import NetworkSearchResponse
 from .plan import Plan
 from .plan_county import PlanCounty
 from .plan_county_bulk import PlanCountyBulk
