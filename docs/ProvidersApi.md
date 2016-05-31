@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_provider**
-> ProviderResponse get_provider(npi, vericred_api_key=vericred_api_key)
+> Provider get_provider(npi, vericred_api_key=vericred_api_key)
 
 Find a Provider
 
@@ -44,7 +44,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProviderResponse**](ProviderResponse.md)
+[**Provider**](Provider.md)
 
 ### Authorization
 

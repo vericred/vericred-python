@@ -52,6 +52,7 @@ class Provider(object):
             'latitude': 'float',
             'longitude': 'float',
             'middle_name': 'str',
+            'network_ids': 'list[int]',
             'personal_phone': 'str',
             'phone': 'str',
             'presentation_name': 'str',
@@ -82,6 +83,7 @@ class Provider(object):
             'latitude': 'latitude',
             'longitude': 'longitude',
             'middle_name': 'middle_name',
+            'network_ids': 'network_ids',
             'personal_phone': 'personal_phone',
             'phone': 'phone',
             'presentation_name': 'presentation_name',
@@ -111,6 +113,7 @@ class Provider(object):
         self._latitude = None
         self._longitude = None
         self._middle_name = None
+        self._network_ids = None
         self._personal_phone = None
         self._phone = None
         self._presentation_name = None
@@ -453,6 +456,28 @@ class Provider(object):
         :type: str
         """
         self._middle_name = middle_name
+
+    @property
+    def network_ids(self):
+        """
+        Gets the network_ids of this Provider.
+        Array of network ids
+
+        :return: The network_ids of this Provider.
+        :rtype: list[int]
+        """
+        return self._network_ids
+
+    @network_ids.setter
+    def network_ids(self, network_ids):
+        """
+        Sets the network_ids of this Provider.
+        Array of network ids
+
+        :param network_ids: The network_ids of this Provider.
+        :type: list[int]
+        """
+        self._network_ids = network_ids
 
     @property
     def personal_phone(self):
