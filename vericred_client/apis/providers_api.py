@@ -62,7 +62,7 @@ class ProvidersApi(object):
             for asynchronous request. (optional)
         :param str npi: NPI number (required)
         :param str vericred_api_key: API Key
-        :return: Provider
+        :return: ProviderShowResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -120,7 +120,7 @@ class ProvidersApi(object):
                                             body=body_params,
                                             post_params=form_params,
                                             files=local_var_files,
-                                            response_type='Provider',
+                                            response_type='ProviderShowResponse',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'))
         return response
