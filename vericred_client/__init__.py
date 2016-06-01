@@ -22,6 +22,7 @@ from .models.plan_search_response import PlanSearchResponse
 from .models.plan_search_result import PlanSearchResult
 from .models.pricing import Pricing
 from .models.provider import Provider
+from .models.provider_show_response import ProviderShowResponse
 from .models.providers_search_response import ProvidersSearchResponse
 from .models.rating_area import RatingArea
 from .models.request_plan_find import RequestPlanFind

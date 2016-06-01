@@ -22,6 +22,7 @@ from .plan_search_response import PlanSearchResponse
 from .plan_search_result import PlanSearchResult
 from .pricing import Pricing
 from .provider import Provider
+from .provider_show_response import ProviderShowResponse
 from .providers_search_response import ProvidersSearchResponse
 from .rating_area import RatingArea
 from .request_plan_find import RequestPlanFind
