@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_zip_counties**
-> ZipCountyResponse get_zip_counties(zip_prefix, vericred_api_key=vericred_api_key)
+> ZipCountyResponse get_zip_counties(zip_prefix)
 
 Search for Zip Counties
 
@@ -21,14 +21,18 @@ import vericred_client
 from vericred_client.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: Vericred-Api-Key
+vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+
 # create an instance of the API class
 api_instance = vericred_client.ZipCountiesApi()
 zip_prefix = '1002' # str | Partial five-digit Zip
-vericred_api_key = 'api-doc-key' # str | API Key (optional)
 
 try: 
     # Search for Zip Counties
-    api_response = api_instance.get_zip_counties(zip_prefix, vericred_api_key=vericred_api_key)
+    api_response = api_instance.get_zip_counties(zip_prefix)
     pprint(api_response)
 except ApiException as e:
     print "Exception when calling ZipCountiesApi->get_zip_counties: %s\n" % e
@@ -39,7 +43,6 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **zip_prefix** | **str**| Partial five-digit Zip | 
- **vericred_api_key** | **str**| API Key | [optional] 
 
 ### Return type
 
@@ -47,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[Vericred-Api-Key](../README.md#Vericred-Api-Key)
 
 ### HTTP request headers
 

@@ -61,13 +61,12 @@ class ZipCountiesApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str zip_prefix: Partial five-digit Zip (required)
-        :param str vericred_api_key: API Key
         :return: ZipCountyResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['zip_prefix', 'vericred_api_key']
+        all_params = ['zip_prefix']
         all_params.append('callback')
 
         params = locals()
@@ -92,8 +91,6 @@ class ZipCountiesApi(object):
             query_params['zip_prefix'] = params['zip_prefix']
 
         header_params = {}
-        if 'vericred_api_key' in params:
-            header_params['Vericred-Api-Key'] = params['vericred_api_key']
 
         form_params = []
         local_var_files = {}
@@ -111,7 +108,7 @@ class ZipCountiesApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'GET',
                                             path_params,

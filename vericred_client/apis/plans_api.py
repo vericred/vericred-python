@@ -52,7 +52,7 @@ class PlansApi(object):
 
 Searching for a set of plans requires a `zip_code` and `fips_code`
 code.  These are used to determine pricing and availabity
-of health plans.
+of health plans. This endpoint is paginated.
 
 Optionally, you may provide a list of Applicants or Providers
 
@@ -110,6 +110,14 @@ and return it for each plan.  If no values are provided, the
 `GET /plans?zip_code=07451&fips_code=33025&household_size=4&household_income=40000`
 
 
+### Sorting
+
+Plans can be sorted by the `premium`, `carrier_name`, `level`, and `plan_type` fields,
+by either ascending (as `asc`) or descending (as `dsc) sort under the `sort` field.
+
+For example, to sort plans by level, the sort parameter would be `level:asc`.
+
+
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
         to be invoked when receiving the response.
@@ -165,7 +173,7 @@ and return it for each plan.  If no values are provided, the
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'POST',
                                             path_params,

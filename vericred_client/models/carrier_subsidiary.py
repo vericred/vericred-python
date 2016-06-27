@@ -38,16 +38,19 @@ class CarrierSubsidiary(object):
         """
         self.swagger_types = {
             'id': 'int',
-            'name': 'str'
+            'name': 'str',
+            'alternate_name': 'str'
         }
 
         self.attribute_map = {
             'id': 'id',
-            'name': 'name'
+            'name': 'name',
+            'alternate_name': 'alternate_name'
         }
 
         self._id = None
         self._name = None
+        self._alternate_name = None
 
     @property
     def id(self):
@@ -92,6 +95,28 @@ class CarrierSubsidiary(object):
         :type: str
         """
         self._name = name
+
+    @property
+    def alternate_name(self):
+        """
+        Gets the alternate_name of this CarrierSubsidiary.
+        Parent Carrier Name
+
+        :return: The alternate_name of this CarrierSubsidiary.
+        :rtype: str
+        """
+        return self._alternate_name
+
+    @alternate_name.setter
+    def alternate_name(self, alternate_name):
+        """
+        Sets the alternate_name of this CarrierSubsidiary.
+        Parent Carrier Name
+
+        :param alternate_name: The alternate_name of this CarrierSubsidiary.
+        :type: str
+        """
+        self._alternate_name = alternate_name
 
     def to_dict(self):
         """

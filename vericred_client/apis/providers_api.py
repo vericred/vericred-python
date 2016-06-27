@@ -61,13 +61,12 @@ class ProvidersApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str npi: NPI number (required)
-        :param str vericred_api_key: API Key
         :return: ProviderShowResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['npi', 'vericred_api_key']
+        all_params = ['npi']
         all_params.append('callback')
 
         params = locals()
@@ -92,8 +91,6 @@ class ProvidersApi(object):
         query_params = {}
 
         header_params = {}
-        if 'vericred_api_key' in params:
-            header_params['Vericred-Api-Key'] = params['vericred_api_key']
 
         form_params = []
         local_var_files = {}
@@ -111,7 +108,7 @@ class ProvidersApi(object):
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'GET',
                                             path_params,
@@ -198,7 +195,7 @@ Specialty name search.  So, searching "John Smith nose" would return
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'POST',
                                             path_params,

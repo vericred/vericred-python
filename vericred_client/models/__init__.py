@@ -20,6 +20,7 @@ from .plan_county import PlanCounty
 from .plan_county_bulk import PlanCountyBulk
 from .plan_search_response import PlanSearchResponse
 from .plan_search_result import PlanSearchResult
+from .plan_zip_county import PlanZipCounty
 from .pricing import Pricing
 from .provider import Provider
 from .provider_show_response import ProviderShowResponse
