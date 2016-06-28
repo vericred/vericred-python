@@ -37,42 +37,17 @@ class PlanCounty(object):
                                   and the value is json key in definition.
         """
         self.swagger_types = {
-            'id': 'int',
             'plan_id': 'int',
             'county_id': 'int'
         }
 
         self.attribute_map = {
-            'id': 'id',
             'plan_id': 'plan_id',
             'county_id': 'county_id'
         }
 
-        self._id = None
         self._plan_id = None
         self._county_id = None
-
-    @property
-    def id(self):
-        """
-        Gets the id of this PlanCounty.
-        Primary key
-
-        :return: The id of this PlanCounty.
-        :rtype: int
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """
-        Sets the id of this PlanCounty.
-        Primary key
-
-        :param id: The id of this PlanCounty.
-        :type: int
-        """
-        self._id = id
 
     @property
     def plan_id(self):

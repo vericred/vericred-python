@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_provider**
-> ProviderShowResponse get_provider(npi, vericred_api_key=vericred_api_key)
+> ProviderShowResponse get_provider(npi)
 
 Find a Provider
 
@@ -22,14 +22,18 @@ import vericred_client
 from vericred_client.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: Vericred-Api-Key
+vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+
 # create an instance of the API class
 api_instance = vericred_client.ProvidersApi()
 npi = '1234567890' # str | NPI number
-vericred_api_key = 'api-doc-key' # str | API Key (optional)
 
 try: 
     # Find a Provider
-    api_response = api_instance.get_provider(npi, vericred_api_key=vericred_api_key)
+    api_response = api_instance.get_provider(npi)
     pprint(api_response)
 except ApiException as e:
     print "Exception when calling ProvidersApi->get_provider: %s\n" % e
@@ -40,7 +44,6 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **npi** | **str**| NPI number | 
- **vericred_api_key** | **str**| API Key | [optional] 
 
 ### Return type
 
@@ -48,7 +51,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[Vericred-Api-Key](../README.md#Vericred-Api-Key)
 
 ### HTTP request headers
 
@@ -84,6 +87,11 @@ import vericred_client
 from vericred_client.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: Vericred-Api-Key
+vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+
 # create an instance of the API class
 api_instance = vericred_client.ProvidersApi()
 body = vericred_client.RequestProvidersSearch() # RequestProvidersSearch |  (optional)
@@ -108,7 +116,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[Vericred-Api-Key](../README.md#Vericred-Api-Key)
 
 ### HTTP request headers
 

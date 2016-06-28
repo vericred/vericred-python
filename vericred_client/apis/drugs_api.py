@@ -65,13 +65,12 @@ returns all DrugCoverages for a given Drug
         :param str ndc_package_code: NDC package code (required)
         :param str audience: Two-character state code (required)
         :param str state_code: Two-character state code (required)
-        :param str vericred_api_key: API Key
         :return: DrugCoverageResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['ndc_package_code', 'audience', 'state_code', 'vericred_api_key']
+        all_params = ['ndc_package_code', 'audience', 'state_code']
         all_params.append('callback')
 
         params = locals()
@@ -106,8 +105,6 @@ returns all DrugCoverages for a given Drug
             query_params['state_code'] = params['state_code']
 
         header_params = {}
-        if 'vericred_api_key' in params:
-            header_params['Vericred-Api-Key'] = params['vericred_api_key']
 
         form_params = []
         local_var_files = {}
@@ -125,7 +122,7 @@ returns all DrugCoverages for a given Drug
             select_header_content_type([])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'GET',
                                             path_params,
@@ -155,13 +152,12 @@ returns all DrugCoverages for a given Drug
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str search_term: Full or partial proprietary name of drug (required)
-        :param str vericred_api_key: API Key
         :return: DrugSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['search_term', 'vericred_api_key']
+        all_params = ['search_term']
         all_params.append('callback')
 
         params = locals()
@@ -186,8 +182,6 @@ returns all DrugCoverages for a given Drug
             query_params['search_term'] = params['search_term']
 
         header_params = {}
-        if 'vericred_api_key' in params:
-            header_params['Vericred-Api-Key'] = params['vericred_api_key']
 
         form_params = []
         local_var_files = {}
@@ -205,7 +199,7 @@ returns all DrugCoverages for a given Drug
             select_header_content_type(['application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'GET',
                                             path_params,

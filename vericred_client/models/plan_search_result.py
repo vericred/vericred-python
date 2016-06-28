@@ -38,6 +38,7 @@ class PlanSearchResult(object):
         """
         self.swagger_types = {
             'adult_dental': 'bool',
+            'age29_rider': 'bool',
             'ambulance': 'str',
             'benefits_summary_url': 'str',
             'buy_link': 'str',
@@ -48,6 +49,7 @@ class PlanSearchResult(object):
             'customer_service_phone_number': 'str',
             'durable_medical_equipment': 'str',
             'diagnostic_test': 'str',
+            'dp_rider': 'bool',
             'drug_formulary_url': 'str',
             'effective_date': 'str',
             'expiration_date': 'str',
@@ -56,6 +58,7 @@ class PlanSearchResult(object):
             'family_drug_moop': 'str',
             'family_medical_deductible': 'str',
             'family_medical_moop': 'str',
+            'fp_rider': 'bool',
             'generic_drugs': 'str',
             'habilitation_services': 'str',
             'hios_issuer_id': 'str',
@@ -106,6 +109,7 @@ class PlanSearchResult(object):
 
         self.attribute_map = {
             'adult_dental': 'adult_dental',
+            'age29_rider': 'age29_rider',
             'ambulance': 'ambulance',
             'benefits_summary_url': 'benefits_summary_url',
             'buy_link': 'buy_link',
@@ -116,6 +120,7 @@ class PlanSearchResult(object):
             'customer_service_phone_number': 'customer_service_phone_number',
             'durable_medical_equipment': 'durable_medical_equipment',
             'diagnostic_test': 'diagnostic_test',
+            'dp_rider': 'dp_rider',
             'drug_formulary_url': 'drug_formulary_url',
             'effective_date': 'effective_date',
             'expiration_date': 'expiration_date',
@@ -124,6 +129,7 @@ class PlanSearchResult(object):
             'family_drug_moop': 'family_drug_moop',
             'family_medical_deductible': 'family_medical_deductible',
             'family_medical_moop': 'family_medical_moop',
+            'fp_rider': 'fp_rider',
             'generic_drugs': 'generic_drugs',
             'habilitation_services': 'habilitation_services',
             'hios_issuer_id': 'hios_issuer_id',
@@ -173,6 +179,7 @@ class PlanSearchResult(object):
         }
 
         self._adult_dental = None
+        self._age29_rider = None
         self._ambulance = None
         self._benefits_summary_url = None
         self._buy_link = None
@@ -183,6 +190,7 @@ class PlanSearchResult(object):
         self._customer_service_phone_number = None
         self._durable_medical_equipment = None
         self._diagnostic_test = None
+        self._dp_rider = None
         self._drug_formulary_url = None
         self._effective_date = None
         self._expiration_date = None
@@ -191,6 +199,7 @@ class PlanSearchResult(object):
         self._family_drug_moop = None
         self._family_medical_deductible = None
         self._family_medical_moop = None
+        self._fp_rider = None
         self._generic_drugs = None
         self._habilitation_services = None
         self._hios_issuer_id = None
@@ -259,6 +268,28 @@ class PlanSearchResult(object):
         :type: bool
         """
         self._adult_dental = adult_dental
+
+    @property
+    def age29_rider(self):
+        """
+        Gets the age29_rider of this PlanSearchResult.
+        
+
+        :return: The age29_rider of this PlanSearchResult.
+        :rtype: bool
+        """
+        return self._age29_rider
+
+    @age29_rider.setter
+    def age29_rider(self, age29_rider):
+        """
+        Sets the age29_rider of this PlanSearchResult.
+        
+
+        :param age29_rider: The age29_rider of this PlanSearchResult.
+        :type: bool
+        """
+        self._age29_rider = age29_rider
 
     @property
     def ambulance(self):
@@ -481,6 +512,28 @@ class PlanSearchResult(object):
         self._diagnostic_test = diagnostic_test
 
     @property
+    def dp_rider(self):
+        """
+        Gets the dp_rider of this PlanSearchResult.
+        Is this a domestic plan?
+
+        :return: The dp_rider of this PlanSearchResult.
+        :rtype: bool
+        """
+        return self._dp_rider
+
+    @dp_rider.setter
+    def dp_rider(self, dp_rider):
+        """
+        Sets the dp_rider of this PlanSearchResult.
+        Is this a domestic plan?
+
+        :param dp_rider: The dp_rider of this PlanSearchResult.
+        :type: bool
+        """
+        self._dp_rider = dp_rider
+
+    @property
     def drug_formulary_url(self):
         """
         Gets the drug_formulary_url of this PlanSearchResult.
@@ -655,6 +708,28 @@ class PlanSearchResult(object):
         :type: str
         """
         self._family_medical_moop = family_medical_moop
+
+    @property
+    def fp_rider(self):
+        """
+        Gets the fp_rider of this PlanSearchResult.
+        Is this a family plan?
+
+        :return: The fp_rider of this PlanSearchResult.
+        :rtype: bool
+        """
+        return self._fp_rider
+
+    @fp_rider.setter
+    def fp_rider(self, fp_rider):
+        """
+        Sets the fp_rider of this PlanSearchResult.
+        Is this a family plan?
+
+        :param fp_rider: The fp_rider of this PlanSearchResult.
+        :type: bool
+        """
+        self._fp_rider = fp_rider
 
     @property
     def generic_drugs(self):

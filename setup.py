@@ -4,7 +4,7 @@ import sys
 from setuptools import setup, find_packages
 
 NAME = "vericred_client"
-VERSION = "0.0.4"
+VERSION = "0.0.5"
 
 
 
@@ -58,17 +58,12 @@ The current version is &#x60;v3&#x60;.  Previous versions are &#x60;v1&#x60; and
 
 ## Pagination
 
-Most endpoints are not paginated.  It will be noted in the documentation if/when
-an endpoint is paginated.
+Endpoints that accept &#x60;page&#x60; and &#x60;per_page&#x60; parameters are paginated. They expose
+four additional fields that contain data about your position in the response,
+namely &#x60;Total&#x60;, &#x60;Per-Page&#x60;, &#x60;Link&#x60;, and &#x60;Page&#x60; as described in [RFC-5988](https://tools.ietf.org/html/rfc5988).
 
-When pagination is present, a &#x60;meta&#x60; stanza will be present in the response
-with the total number of records
-
-&#x60;&#x60;&#x60;
-{
-  things: [{ id: 1 }, { id: 2 }],
-  meta: { total: 500 }
-}
+For example, to display 5 results per page and view the second page of a
+&#x60;GET&#x60; to &#x60;/networks&#x60;, your final request would be &#x60;GET /networks?....page&#x3D;2&amp;per_page&#x3D;5&#x60;.
 &#x60;&#x60;&#x60;
 
 ## Sideloading

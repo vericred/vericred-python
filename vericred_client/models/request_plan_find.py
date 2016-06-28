@@ -45,6 +45,9 @@ class RequestPlanFind(object):
             'household_size': 'int',
             'market': 'str',
             'providers': 'list[RequestPlanFindProvider]',
+            'page': 'int',
+            'per_page': 'int',
+            'sort': 'str',
             'zip_code': 'str'
         }
 
@@ -57,6 +60,9 @@ class RequestPlanFind(object):
             'household_size': 'household_size',
             'market': 'market',
             'providers': 'providers',
+            'page': 'page',
+            'per_page': 'per_page',
+            'sort': 'sort',
             'zip_code': 'zip_code'
         }
 
@@ -68,6 +74,9 @@ class RequestPlanFind(object):
         self._household_size = None
         self._market = None
         self._providers = None
+        self._page = None
+        self._per_page = None
+        self._sort = None
         self._zip_code = None
 
     @property
@@ -245,6 +254,72 @@ class RequestPlanFind(object):
         :type: list[RequestPlanFindProvider]
         """
         self._providers = providers
+
+    @property
+    def page(self):
+        """
+        Gets the page of this RequestPlanFind.
+        Selected page of paginated response.
+
+        :return: The page of this RequestPlanFind.
+        :rtype: int
+        """
+        return self._page
+
+    @page.setter
+    def page(self, page):
+        """
+        Sets the page of this RequestPlanFind.
+        Selected page of paginated response.
+
+        :param page: The page of this RequestPlanFind.
+        :type: int
+        """
+        self._page = page
+
+    @property
+    def per_page(self):
+        """
+        Gets the per_page of this RequestPlanFind.
+        Results per page of response.
+
+        :return: The per_page of this RequestPlanFind.
+        :rtype: int
+        """
+        return self._per_page
+
+    @per_page.setter
+    def per_page(self, per_page):
+        """
+        Sets the per_page of this RequestPlanFind.
+        Results per page of response.
+
+        :param per_page: The per_page of this RequestPlanFind.
+        :type: int
+        """
+        self._per_page = per_page
+
+    @property
+    def sort(self):
+        """
+        Gets the sort of this RequestPlanFind.
+        Sort responses by plan field.
+
+        :return: The sort of this RequestPlanFind.
+        :rtype: str
+        """
+        return self._sort
+
+    @sort.setter
+    def sort(self, sort):
+        """
+        Sets the sort of this RequestPlanFind.
+        Sort responses by plan field.
+
+        :param sort: The sort of this RequestPlanFind.
+        :type: str
+        """
+        self._sort = sort
 
     @property
     def zip_code(self):

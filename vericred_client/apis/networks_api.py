@@ -50,7 +50,7 @@ class NetworksApi(object):
         Networks
         A network is a list of the doctors, other health care providers,
 and hospitals that a plan has contracted with to provide medical care to
-its members.
+its members. This endpoint is paginated.
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please define a `callback` function
@@ -63,12 +63,14 @@ its members.
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str carrier_id: Carrier HIOS Issuer ID (required)
+        :param int page: Page of paginated response
+        :param int per_page: Responses per page
         :return: NetworkSearchResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['carrier_id']
+        all_params = ['carrier_id', 'page', 'per_page']
         all_params.append('callback')
 
         params = locals()
@@ -91,6 +93,10 @@ its members.
         query_params = {}
         if 'carrier_id' in params:
             query_params['carrier_id'] = params['carrier_id']
+        if 'page' in params:
+            query_params['page'] = params['page']
+        if 'per_page' in params:
+            query_params['per_page'] = params['per_page']
 
         header_params = {}
 
@@ -110,7 +116,7 @@ its members.
             select_header_content_type(['application/json'])
 
         # Authentication setting
-        auth_settings = []
+        auth_settings = ['Vericred-Api-Key']
 
         response = self.api_client.call_api(resource_path, 'GET',
                                             path_params,

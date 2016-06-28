@@ -214,6 +214,13 @@ class Configuration(object):
         :return: The Auth Settings information dict.
         """
         return {
+            'Vericred-Api-Key':
+                {
+                    'type': 'api_key',
+                    'in': 'header',
+                    'key': 'Vericred-Api-Key',
+                    'value': self.get_api_key_with_prefix('Vericred-Api-Key')
+                },
 
         }
 
@@ -227,5 +234,5 @@ class Configuration(object):
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 0.0.4".\
+               "SDK Package Version: 0.0.5".\
                format(env=sys.platform, pyversion=sys.version)

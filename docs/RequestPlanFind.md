@@ -11,6 +11,9 @@ Name | Type | Description | Notes
 **household_size** | **int** | Number of people living in household. | [optional] 
 **market** | **str** | Type of plan to search for. | [optional] 
 **providers** | [**list[RequestPlanFindProvider]**](RequestPlanFindProvider.md) | List of providers to search for. | [optional] 
+**page** | **int** | Selected page of paginated response. | [optional] 
+**per_page** | **int** | Results per page of response. | [optional] 
+**sort** | **str** | Sort responses by plan field. | [optional] 
 **zip_code** | **str** | 5-digit zip code - this helps determine pricing. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
