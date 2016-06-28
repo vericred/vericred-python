@@ -13,9 +13,7 @@ Method | HTTP request | Description
 
 Search for DrugCoverages
 
-Drug Coverages are the specific tier level, quantity limit, prior
-authorization and step therapy for a given Drug/Plan combination. This endpoint
-returns all DrugCoverages for a given Drug
+Drug Coverages are the specific tier level, quantity limit, prior authorization and step therapy for a given Drug/Plan combination. This endpoint returns all DrugCoverages for a given Drug
 
 ### Example 
 ```python
@@ -26,8 +24,8 @@ from pprint import pprint
 
 # Configure API key authorization: Vericred-Api-Key
 vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 
 # create an instance of the API class
 api_instance = vericred_client.DrugsApi()
@@ -82,8 +80,8 @@ from pprint import pprint
 
 # Configure API key authorization: Vericred-Api-Key
 vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 
 # create an instance of the API class
 api_instance = vericred_client.DrugsApi()
