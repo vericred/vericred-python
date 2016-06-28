@@ -12,9 +12,7 @@ Method | HTTP request | Description
 
 Networks
 
-A network is a list of the doctors, other health care providers,
-and hospitals that a plan has contracted with to provide medical care to
-its members. This endpoint is paginated.
+A network is a list of the doctors, other health care providers, and hospitals that a plan has contracted with to provide medical care to its members. This endpoint is paginated.
 
 ### Example 
 ```python
@@ -25,8 +23,8 @@ from pprint import pprint
 
 # Configure API key authorization: Vericred-Api-Key
 vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 
 # create an instance of the API class
 api_instance = vericred_client.NetworksApi()

@@ -24,8 +24,8 @@ from pprint import pprint
 
 # Configure API key authorization: Vericred-Api-Key
 vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 
 # create an instance of the API class
 api_instance = vericred_client.ProvidersApi()
@@ -65,20 +65,7 @@ Name | Type | Description  | Notes
 
 Find Providers
 
-All `Provider` searches require a `zip_code`, which we use for weighting
-the search results to favor `Provider`s that are near the user.  For example,
-we would want "Dr. John Smith" who is 5 miles away to appear before
-"Dr. John Smith" who is 100 miles away.
-
-The weighting also allows for non-exact matches.  In our prior example, we
-would want "Dr. Jon Smith" who is 2 miles away to appear before the exact
-match "Dr. John Smith" who is 100 miles away because it is more likely that
-the user just entered an incorrect name.
-
-The free text search also supports Specialty name search and "body part"
-Specialty name search.  So, searching "John Smith nose" would return
-"Dr. John Smith", the ENT Specialist before "Dr. John Smith" the Internist.
-
+All `Provider` searches require a `zip_code`, which we use for weighting the search results to favor `Provider`s that are near the user.  For example, we would want \"Dr. John Smith\" who is 5 miles away to appear before \"Dr. John Smith\" who is 100 miles away.  The weighting also allows for non-exact matches.  In our prior example, we would want \"Dr. Jon Smith\" who is 2 miles away to appear before the exact match \"Dr. John Smith\" who is 100 miles away because it is more likely that the user just entered an incorrect name.  The free text search also supports Specialty name search and \"body part\" Specialty name search.  So, searching \"John Smith nose\" would return \"Dr. John Smith\", the ENT Specialist before \"Dr. John Smith\" the Internist. 
 
 ### Example 
 ```python
@@ -89,8 +76,8 @@ from pprint import pprint
 
 # Configure API key authorization: Vericred-Api-Key
 vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. BEARER) for API key, if needed
-# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'BEARER'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 
 # create an instance of the API class
 api_instance = vericred_client.ProvidersApi()
