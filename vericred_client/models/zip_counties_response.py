@@ -167,6 +167,7 @@ class ZipCountiesResponse(object):
         self._zip_counties = zip_counties
         self._zip_codes = zip_codes
 
+
     @property
     def counties(self):
         """

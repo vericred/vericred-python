@@ -137,33 +137,23 @@ import unittest
 
 import vericred_client
 from vericred_client.rest import ApiException
-from vericred_client.apis.plans_api import PlansApi
+from vericred_client.models.request_plan_find_drug_package import RequestPlanFindDrugPackage
 
 
-class TestPlansApi(unittest.TestCase):
-    """ PlansApi unit test stubs """
+class TestRequestPlanFindDrugPackage(unittest.TestCase):
+    """ RequestPlanFindDrugPackage unit test stubs """
 
     def setUp(self):
-        self.api = vericred_client.apis.plans_api.PlansApi()
+        pass
 
     def tearDown(self):
         pass
 
-    def test_find_plans(self):
+    def testRequestPlanFindDrugPackage(self):
         """
-        Test case for find_plans
-
-        Find Plans
+        Test RequestPlanFindDrugPackage
         """
-        pass
-
-    def test_show_plan(self):
-        """
-        Test case for show_plan
-
-        Show Plan
-        """
-        pass
+        model = vericred_client.models.request_plan_find_drug_package.RequestPlanFindDrugPackage()
 
 
 if __name__ == '__main__':

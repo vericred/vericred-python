@@ -167,6 +167,7 @@ class DrugCoverageResponse(object):
         self._drugs = drugs
         self._drug_packages = drug_packages
 
+
     @property
     def meta(self):
         """

@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **accepts_insurance** | **bool** | Limit results to Providers who accept at least one insurance         plan.  Note that the inverse of this filter is not supported and         any value will evaluate to true | [optional] 
 **hios_ids** | **list[str]** | List of HIOS ids | [optional] 
+**min_score** | **float** | Minimum search threshold to be included in the results | [optional] 
 **page** | **int** | Page number | [optional] 
 **per_page** | **int** | Number of records to return per page | [optional] 
 **radius** | **int** | Radius (in miles) to use to limit results | [optional] 

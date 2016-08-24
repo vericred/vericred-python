@@ -161,6 +161,7 @@ class RatingArea(object):
         self._id = id
         self._state_id = state_id
 
+
     @property
     def id(self):
         """

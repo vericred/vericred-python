@@ -167,6 +167,7 @@ class Drug(object):
         self._non_proprietary_name = non_proprietary_name
         self._drug_package_ids = drug_package_ids
 
+
     @property
     def id(self):
         """

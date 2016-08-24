@@ -173,6 +173,7 @@ class DrugCoverage(object):
         self._prior_authorization = prior_authorization
         self._step_therapy = step_therapy
 
+
     @property
     def plan_id(self):
         """

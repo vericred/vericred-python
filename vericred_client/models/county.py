@@ -176,6 +176,7 @@ class County(object):
         self._state_live = state_live
         self._state_live_for_business = state_live_for_business
 
+
     @property
     def id(self):
         """

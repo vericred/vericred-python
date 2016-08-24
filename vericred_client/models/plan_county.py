@@ -161,6 +161,7 @@ class PlanCounty(object):
         self._plan_id = plan_id
         self._county_id = county_id
 
+
     @property
     def plan_id(self):
         """

@@ -179,6 +179,7 @@ class State(object):
         self._live_for_business = live_for_business
         self._live_for_consumers = live_for_consumers
 
+
     @property
     def id(self):
         """

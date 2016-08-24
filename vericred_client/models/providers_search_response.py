@@ -164,6 +164,7 @@ class ProvidersSearchResponse(object):
         self._providers = providers
         self._states = states
 
+
     @property
     def meta(self):
         """

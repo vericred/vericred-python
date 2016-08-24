@@ -164,6 +164,7 @@ class PlanSearchResponse(object):
         self._plans = plans
         self._coverages = coverages
 
+
     @property
     def meta(self):
         """

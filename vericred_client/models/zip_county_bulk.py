@@ -167,6 +167,7 @@ class ZipCountyBulk(object):
         self._county_id = county_id
         self._zip_code_id = zip_code_id
 
+
     @property
     def id(self):
         """

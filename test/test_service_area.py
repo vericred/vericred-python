@@ -137,11 +137,11 @@ import unittest
 
 import vericred_client
 from vericred_client.rest import ApiException
-from vericred_client.models.plan_zip_county import PlanZipCounty
+from vericred_client.models.service_area import ServiceArea
 
 
-class TestPlanZipCounty(unittest.TestCase):
-    """ PlanZipCounty unit test stubs """
+class TestServiceArea(unittest.TestCase):
+    """ ServiceArea unit test stubs """
 
     def setUp(self):
         pass
@@ -149,11 +149,11 @@ class TestPlanZipCounty(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testPlanZipCounty(self):
+    def testServiceArea(self):
         """
-        Test PlanZipCounty
+        Test ServiceArea
         """
-        model = vericred_client.models.plan_zip_county.PlanZipCounty()
+        model = vericred_client.models.service_area.ServiceArea()
 
 
 if __name__ == '__main__':
