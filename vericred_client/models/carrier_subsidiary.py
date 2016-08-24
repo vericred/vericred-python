@@ -164,6 +164,7 @@ class CarrierSubsidiary(object):
         self._name = name
         self._alternate_name = alternate_name
 
+
     @property
     def id(self):
         """

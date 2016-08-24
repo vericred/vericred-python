@@ -174,6 +174,8 @@ class ProvidersApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str npi: NPI number (required)
+        :param str year: Only show plan ids for the given year
+        :param str state: Only show plan ids for the given state
         :return: ProviderShowResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -201,12 +203,14 @@ class ProvidersApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str npi: NPI number (required)
+        :param str year: Only show plan ids for the given year
+        :param str state: Only show plan ids for the given state
         :return: ProviderShowResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['npi']
+        all_params = ['npi', 'year', 'state']
         all_params.append('callback')
         all_params.append('_return_http_data_only')
 
@@ -229,6 +233,10 @@ class ProvidersApi(object):
             path_params['npi'] = params['npi']
 
         query_params = {}
+        if 'year' in params:
+            query_params['year'] = params['year']
+        if 'state' in params:
+            query_params['state'] = params['state']
 
         header_params = {}
 

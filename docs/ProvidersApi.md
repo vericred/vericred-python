@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_provider**
-> ProviderShowResponse get_provider(npi)
+> ProviderShowResponse get_provider(npi, year=year, state=state)
 
 Find a Provider
 
@@ -30,10 +30,12 @@ vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = vericred_client.ProvidersApi()
 npi = '1234567890' # str | NPI number
+year = '2016' # str | Only show plan ids for the given year (optional)
+state = 'NY' # str | Only show plan ids for the given state (optional)
 
 try: 
     # Find a Provider
-    api_response = api_instance.get_provider(npi)
+    api_response = api_instance.get_provider(npi, year=year, state=state)
     pprint(api_response)
 except ApiException as e:
     print "Exception when calling ProvidersApi->get_provider: %s\n" % e
@@ -44,6 +46,8 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **npi** | **str**| NPI number | 
+ **year** | **str**| Only show plan ids for the given year | [optional] 
+ **state** | **str**| Only show plan ids for the given state | [optional] 
 
 ### Return type
 

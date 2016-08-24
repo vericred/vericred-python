@@ -161,6 +161,7 @@ class DrugPackage(object):
         self._id = id
         self._description = description
 
+
     @property
     def id(self):
         """

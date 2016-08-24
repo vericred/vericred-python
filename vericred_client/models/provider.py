@@ -239,6 +239,7 @@ class Provider(object):
         self._type = type
         self._zip_code = zip_code
 
+
     @property
     def accepting_change_of_payor_patients(self):
         """

@@ -176,6 +176,7 @@ class Applicant(object):
         self._smoker = smoker
         self._ssn = ssn
 
+
     @property
     def id(self):
         """

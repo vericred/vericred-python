@@ -151,7 +151,7 @@ from .models.plan_county import PlanCounty
 from .models.plan_county_bulk import PlanCountyBulk
 from .models.plan_search_response import PlanSearchResponse
 from .models.plan_search_result import PlanSearchResult
-from .models.plan_zip_county import PlanZipCounty
+from .models.plan_show_response import PlanShowResponse
 from .models.pricing import Pricing
 from .models.provider import Provider
 from .models.provider_show_response import ProviderShowResponse
@@ -159,8 +159,11 @@ from .models.providers_search_response import ProvidersSearchResponse
 from .models.rating_area import RatingArea
 from .models.request_plan_find import RequestPlanFind
 from .models.request_plan_find_applicant import RequestPlanFindApplicant
+from .models.request_plan_find_drug_package import RequestPlanFindDrugPackage
 from .models.request_plan_find_provider import RequestPlanFindProvider
 from .models.request_providers_search import RequestProvidersSearch
+from .models.service_area import ServiceArea
+from .models.service_area_zip_county import ServiceAreaZipCounty
 from .models.state import State
 from .models.zip_code import ZipCode
 from .models.zip_counties_response import ZipCountiesResponse

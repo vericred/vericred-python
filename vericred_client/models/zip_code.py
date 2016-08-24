@@ -161,6 +161,7 @@ class ZipCode(object):
         self._code = code
         self._id = id
 
+
     @property
     def code(self):
         """

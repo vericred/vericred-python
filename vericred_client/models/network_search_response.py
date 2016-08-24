@@ -161,6 +161,7 @@ class NetworkSearchResponse(object):
         self._meta = meta
         self._networks = networks
 
+
     @property
     def meta(self):
         """

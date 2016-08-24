@@ -158,6 +158,7 @@ class RequestPlanFindProvider(object):
 
         self._npi = npi
 
+
     @property
     def npi(self):
         """

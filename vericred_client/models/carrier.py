@@ -164,6 +164,7 @@ class Carrier(object):
         self._name = name
         self._logo_path = logo_path
 
+
     @property
     def id(self):
         """

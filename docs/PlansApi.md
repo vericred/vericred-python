@@ -5,6 +5,7 @@ All URIs are relative to *https://api.vericred.com/*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**find_plans**](PlansApi.md#find_plans) | **POST** /plans/search | Find Plans
+[**show_plan**](PlansApi.md#show_plan) | **GET** /plans/{id} | Show Plan
 
 
 # **find_plans**
@@ -56,6 +57,58 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **show_plan**
+> PlanShowResponse show_plan(year=year)
+
+Show Plan
+
+Show the details of an individual Plan.  This includes deductibles, maximums out of pocket, and co-pay/coinsurance for benefits
+
+### Example 
+```python
+import time
+import vericred_client
+from vericred_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: Vericred-Api-Key
+vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = vericred_client.PlansApi()
+year = 2016 # int | Plan year (defaults to current year) (optional)
+
+try: 
+    # Show Plan
+    api_response = api_instance.show_plan(year=year)
+    pprint(api_response)
+except ApiException as e:
+    print "Exception when calling PlansApi->show_plan: %s\n" % e
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **year** | **int**| Plan year (defaults to current year) | [optional] 
+
+### Return type
+
+[**PlanShowResponse**](PlanShowResponse.md)
+
+### Authorization
+
+[Vericred-Api-Key](../README.md#Vericred-Api-Key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

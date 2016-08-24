@@ -158,6 +158,7 @@ class Meta(object):
 
         self._total = total
 
+
     @property
     def total(self):
         """

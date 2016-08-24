@@ -151,7 +151,7 @@ from .plan_county import PlanCounty
 from .plan_county_bulk import PlanCountyBulk
 from .plan_search_response import PlanSearchResponse
 from .plan_search_result import PlanSearchResult
-from .plan_zip_county import PlanZipCounty
+from .plan_show_response import PlanShowResponse
 from .pricing import Pricing
 from .provider import Provider
 from .provider_show_response import ProviderShowResponse
@@ -159,8 +159,11 @@ from .providers_search_response import ProvidersSearchResponse
 from .rating_area import RatingArea
 from .request_plan_find import RequestPlanFind
 from .request_plan_find_applicant import RequestPlanFindApplicant
+from .request_plan_find_drug_package import RequestPlanFindDrugPackage
 from .request_plan_find_provider import RequestPlanFindProvider
 from .request_providers_search import RequestProvidersSearch
+from .service_area import ServiceArea
+from .service_area_zip_county import ServiceAreaZipCounty
 from .state import State
 from .zip_code import ZipCode
 from .zip_counties_response import ZipCountiesResponse

@@ -188,6 +188,7 @@ class Pricing(object):
         self._premium_single_smoker = premium_single_smoker
         self._rating_area_id = rating_area_id
 
+
     @property
     def age(self):
         """

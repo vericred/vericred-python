@@ -158,6 +158,7 @@ class ProviderShowResponse(object):
 
         self._provider = provider
 
+
     @property
     def provider(self):
         """
