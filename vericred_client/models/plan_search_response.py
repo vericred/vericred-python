@@ -151,7 +151,7 @@ class PlanSearchResponse(object):
         self.swagger_types = {
             'meta': 'Meta',
             'plans': 'list[Plan]',
-            'coverages': 'list[Drug]'
+            'coverages': 'list[DrugCoverage]'
         }
 
         self.attribute_map = {
@@ -169,7 +169,7 @@ class PlanSearchResponse(object):
     def meta(self):
         """
         Gets the meta of this PlanSearchResponse.
-        Metadata for query
+        Meta-data
 
         :return: The meta of this PlanSearchResponse.
         :rtype: Meta
@@ -180,7 +180,7 @@ class PlanSearchResponse(object):
     def meta(self, meta):
         """
         Sets the meta of this PlanSearchResponse.
-        Metadata for query
+        Meta-data
 
         :param meta: The meta of this PlanSearchResponse.
         :type: Meta
@@ -215,10 +215,10 @@ class PlanSearchResponse(object):
     def coverages(self):
         """
         Gets the coverages of this PlanSearchResponse.
-        null
+        Coverages associated with the plan.
 
         :return: The coverages of this PlanSearchResponse.
-        :rtype: list[Drug]
+        :rtype: list[DrugCoverage]
         """
         return self._coverages
 
@@ -226,10 +226,10 @@ class PlanSearchResponse(object):
     def coverages(self, coverages):
         """
         Sets the coverages of this PlanSearchResponse.
-        null
+        Coverages associated with the plan.
 
         :param coverages: The coverages of this PlanSearchResponse.
-        :type: list[Drug]
+        :type: list[DrugCoverage]
         """
 
         self._coverages = coverages

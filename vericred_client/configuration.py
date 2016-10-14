@@ -130,19 +130,14 @@ The response would be
 """
 
 from __future__ import absolute_import
-import base64
-import urllib3
 
-try:
-    import httplib
-except ImportError:
-    # for python3
-    import http.client as httplib
+import urllib3
 
 import sys
 import logging
 
 from six import iteritems
+from six.moves import http_client as httplib
 
 
 def singleton(cls, *args, **kw):

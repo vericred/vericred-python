@@ -16,6 +16,7 @@ Our `Plan` endpoints require a zip code and a fips (county) code.  This is becau
 
 ### Example 
 ```python
+from __future__ import print_statement
 import time
 import vericred_client
 from vericred_client.rest import ApiException
@@ -35,7 +36,7 @@ try:
     api_response = api_instance.get_zip_counties(zip_prefix)
     pprint(api_response)
 except ApiException as e:
-    print "Exception when calling ZipCountiesApi->get_zip_counties: %s\n" % e
+    print("Exception when calling ZipCountiesApi->get_zip_counties: %s\n" % e)
 ```
 
 ### Parameters

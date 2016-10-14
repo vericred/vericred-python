@@ -174,7 +174,7 @@ class DrugsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str ndc_package_code: NDC package code (required)
-        :param str audience: Two-character state code (required)
+        :param str audience: Plan Audience (individual or small_group) (required)
         :param str state_code: Two-character state code (required)
         :return: DrugCoverageResponse
                  If the method is called asynchronously,
@@ -203,7 +203,7 @@ class DrugsApi(object):
         :param callback function: The callback function
             for asynchronous request. (optional)
         :param str ndc_package_code: NDC package code (required)
-        :param str audience: Two-character state code (required)
+        :param str audience: Plan Audience (individual or small_group) (required)
         :param str state_code: Two-character state code (required)
         :return: DrugCoverageResponse
                  If the method is called asynchronously,
@@ -232,6 +232,9 @@ class DrugsApi(object):
         # verify the required parameter 'state_code' is set
         if ('state_code' not in params) or (params['state_code'] is None):
             raise ValueError("Missing the required parameter `state_code` when calling `get_drug_coverages`")
+
+
+        collection_formats = {}
 
         resource_path = '/drug_packages/{ndc_package_code}/coverages'.replace('{format}', 'json')
         path_params = {}
@@ -274,7 +277,8 @@ class DrugsApi(object):
                                             response_type='DrugCoverageResponse',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'))
+                                            _return_http_data_only=params.get('_return_http_data_only'),
+                                            collection_formats=collection_formats)
 
     def list_drugs(self, search_term, **kwargs):
         """
@@ -341,6 +345,9 @@ class DrugsApi(object):
         if ('search_term' not in params) or (params['search_term'] is None):
             raise ValueError("Missing the required parameter `search_term` when calling `list_drugs`")
 
+
+        collection_formats = {}
+
         resource_path = '/drugs'.replace('{format}', 'json')
         path_params = {}
 
@@ -378,4 +385,5 @@ class DrugsApi(object):
                                             response_type='DrugSearchResponse',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'))
+                                            _return_http_data_only=params.get('_return_http_data_only'),
+                                            collection_formats=collection_formats)

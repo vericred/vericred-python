@@ -169,7 +169,7 @@ class DrugSearchResponse(object):
     def meta(self):
         """
         Gets the meta of this DrugSearchResponse.
-        Metadata for query
+        Meta-data
 
         :return: The meta of this DrugSearchResponse.
         :rtype: Meta
@@ -180,7 +180,7 @@ class DrugSearchResponse(object):
     def meta(self, meta):
         """
         Sets the meta of this DrugSearchResponse.
-        Metadata for query
+        Meta-data
 
         :param meta: The meta of this DrugSearchResponse.
         :type: Meta

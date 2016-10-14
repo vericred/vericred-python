@@ -143,9 +143,12 @@ from .drug_coverage import DrugCoverage
 from .drug_coverage_response import DrugCoverageResponse
 from .drug_package import DrugPackage
 from .drug_search_response import DrugSearchResponse
+from .formulary import Formulary
+from .formulary_drug_package_response import FormularyDrugPackageResponse
 from .meta import Meta
 from .network import Network
 from .network_search_response import NetworkSearchResponse
+from .network_size import NetworkSize
 from .plan import Plan
 from .plan_county import PlanCounty
 from .plan_county_bulk import PlanCountyBulk
@@ -154,6 +157,7 @@ from .plan_search_result import PlanSearchResult
 from .plan_show_response import PlanShowResponse
 from .pricing import Pricing
 from .provider import Provider
+from .provider_details import ProviderDetails
 from .provider_show_response import ProviderShowResponse
 from .providers_search_response import ProvidersSearchResponse
 from .rating_area import RatingArea
@@ -165,6 +169,7 @@ from .request_providers_search import RequestProvidersSearch
 from .service_area import ServiceArea
 from .service_area_zip_county import ServiceAreaZipCounty
 from .state import State
+from .state_network_size_response import StateNetworkSizeResponse
 from .zip_code import ZipCode
 from .zip_counties_response import ZipCountiesResponse
 from .zip_county import ZipCounty

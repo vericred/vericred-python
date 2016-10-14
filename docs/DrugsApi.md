@@ -17,6 +17,7 @@ Drug Coverages are the specific tier level, quantity limit, prior authorization 
 
 ### Example 
 ```python
+from __future__ import print_statement
 import time
 import vericred_client
 from vericred_client.rest import ApiException
@@ -29,16 +30,16 @@ vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = vericred_client.DrugsApi()
-ndc_package_code = '12345-4321-11' # str | NDC package code
-audience = 'individual' # str | Two-character state code
-state_code = 'NY' # str | Two-character state code
+ndc_package_code = '07777-3105-01' # str | NDC package code
+audience = 'individual' # str | Plan Audience (individual or small_group)
+state_code = 'CA' # str | Two-character state code
 
 try: 
     # Search for DrugCoverages
     api_response = api_instance.get_drug_coverages(ndc_package_code, audience, state_code)
     pprint(api_response)
 except ApiException as e:
-    print "Exception when calling DrugsApi->get_drug_coverages: %s\n" % e
+    print("Exception when calling DrugsApi->get_drug_coverages: %s\n" % e)
 ```
 
 ### Parameters
@@ -46,7 +47,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ndc_package_code** | **str**| NDC package code | 
- **audience** | **str**| Two-character state code | 
+ **audience** | **str**| Plan Audience (individual or small_group) | 
  **state_code** | **str**| Two-character state code | 
 
 ### Return type
@@ -73,6 +74,7 @@ Search for drugs by proprietary name
 
 ### Example 
 ```python
+from __future__ import print_statement
 import time
 import vericred_client
 from vericred_client.rest import ApiException
@@ -92,7 +94,7 @@ try:
     api_response = api_instance.list_drugs(search_term)
     pprint(api_response)
 except ApiException as e:
-    print "Exception when calling DrugsApi->list_drugs: %s\n" % e
+    print("Exception when calling DrugsApi->list_drugs: %s\n" % e)
 ```
 
 ### Parameters

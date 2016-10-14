@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | National Drug Code ID | [optional] 
+**active_ingredient_strength** | **str** | Active Ingredient Strength information | [optional] 
 **proprietary_name** | **str** | Proprietary name of drug | [optional] 
 **non_proprietary_name** | **str** | Non-proprietary name of drug | [optional] 
 **drug_package_ids** | **list[str]** | Array of drug package Ids | [optional] 

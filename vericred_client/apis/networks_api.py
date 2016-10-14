@@ -227,6 +227,9 @@ class NetworksApi(object):
         if ('carrier_id' not in params) or (params['carrier_id'] is None):
             raise ValueError("Missing the required parameter `carrier_id` when calling `list_networks`")
 
+
+        collection_formats = {}
+
         resource_path = '/networks'.replace('{format}', 'json')
         path_params = {}
 
@@ -268,4 +271,5 @@ class NetworksApi(object):
                                             response_type='NetworkSearchResponse',
                                             auth_settings=auth_settings,
                                             callback=params.get('callback'),
-                                            _return_http_data_only=params.get('_return_http_data_only'))
+                                            _return_http_data_only=params.get('_return_http_data_only'),
+                                            collection_formats=collection_formats)
