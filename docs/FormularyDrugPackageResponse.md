@@ -1,10 +1,11 @@
-# NetworkSearchResponse
+# FormularyDrugPackageResponse
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**meta** | [**Meta**](Meta.md) | Meta-data | [optional] 
-**networks** | [**list[Network]**](Network.md) | Networks that fit the requested criterion. | [optional] 
+**coverage** | [**DrugCoverage**](DrugCoverage.md) | DrugCoverage | [optional] 
+**drug_package** | [**DrugPackage**](DrugPackage.md) | DrugPackage | [optional] 
+**formulary** | [**Formulary**](Formulary.md) | Formulary | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

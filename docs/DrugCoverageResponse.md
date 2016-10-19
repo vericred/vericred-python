@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**meta** | [**Meta**](Meta.md) | Metadata for query | [optional] 
+**meta** | [**Meta**](Meta.md) | Meta-data | [optional] 
 **drug_coverages** | [**list[DrugCoverage]**](DrugCoverage.md) | DrugCoverage search results | [optional] 
 **drugs** | [**list[Drug]**](Drug.md) | Drug | [optional] 
 **drug_packages** | [**list[DrugPackage]**](DrugPackage.md) | Drug Packages | [optional] 

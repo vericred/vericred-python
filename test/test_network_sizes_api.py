@@ -131,63 +131,32 @@ The response would be
 
 from __future__ import absolute_import
 
-# import models into sdk package
-from .models.applicant import Applicant
-from .models.base import Base
-from .models.carrier import Carrier
-from .models.carrier_subsidiary import CarrierSubsidiary
-from .models.county import County
-from .models.county_bulk import CountyBulk
-from .models.drug import Drug
-from .models.drug_coverage import DrugCoverage
-from .models.drug_coverage_response import DrugCoverageResponse
-from .models.drug_package import DrugPackage
-from .models.drug_search_response import DrugSearchResponse
-from .models.formulary import Formulary
-from .models.formulary_drug_package_response import FormularyDrugPackageResponse
-from .models.meta import Meta
-from .models.network import Network
-from .models.network_search_response import NetworkSearchResponse
-from .models.network_size import NetworkSize
-from .models.plan import Plan
-from .models.plan_county import PlanCounty
-from .models.plan_county_bulk import PlanCountyBulk
-from .models.plan_search_response import PlanSearchResponse
-from .models.plan_search_result import PlanSearchResult
-from .models.plan_show_response import PlanShowResponse
-from .models.pricing import Pricing
-from .models.provider import Provider
-from .models.provider_details import ProviderDetails
-from .models.provider_show_response import ProviderShowResponse
-from .models.providers_search_response import ProvidersSearchResponse
-from .models.rating_area import RatingArea
-from .models.request_plan_find import RequestPlanFind
-from .models.request_plan_find_applicant import RequestPlanFindApplicant
-from .models.request_plan_find_drug_package import RequestPlanFindDrugPackage
-from .models.request_plan_find_provider import RequestPlanFindProvider
-from .models.request_providers_search import RequestProvidersSearch
-from .models.service_area import ServiceArea
-from .models.service_area_zip_county import ServiceAreaZipCounty
-from .models.state import State
-from .models.state_network_size_response import StateNetworkSizeResponse
-from .models.zip_code import ZipCode
-from .models.zip_counties_response import ZipCountiesResponse
-from .models.zip_county import ZipCounty
-from .models.zip_county_bulk import ZipCountyBulk
-from .models.zip_county_response import ZipCountyResponse
+import os
+import sys
+import unittest
 
-# import apis into sdk package
-from .apis.drug_packages_api import DrugPackagesApi
-from .apis.drugs_api import DrugsApi
-from .apis.network_sizes_api import NetworkSizesApi
-from .apis.networks_api import NetworksApi
-from .apis.plans_api import PlansApi
-from .apis.providers_api import ProvidersApi
-from .apis.zip_counties_api import ZipCountiesApi
+import vericred_client
+from vericred_client.rest import ApiException
+from vericred_client.apis.network_sizes_api import NetworkSizesApi
 
-# import ApiClient
-from .api_client import ApiClient
 
-from .configuration import Configuration
+class TestNetworkSizesApi(unittest.TestCase):
+    """ NetworkSizesApi unit test stubs """
 
-configuration = Configuration()
+    def setUp(self):
+        self.api = vericred_client.apis.network_sizes_api.NetworkSizesApi()
+
+    def tearDown(self):
+        pass
+
+    def test_list_state_network_sizes(self):
+        """
+        Test case for list_state_network_sizes
+
+        State Network Sizes
+        """
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()

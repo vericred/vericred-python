@@ -1,18 +1,18 @@
-# vericred_client.NetworksApi
+# vericred_client.DrugPackagesApi
 
 All URIs are relative to *https://api.vericred.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**list_networks**](NetworksApi.md#list_networks) | **GET** /networks | Networks
+[**show_formulary_drug_package_coverage**](DrugPackagesApi.md#show_formulary_drug_package_coverage) | **GET** /formularies/{formulary_id}/drug_packages/{ndc_package_code} | Formulary Drug Package Search
 
 
-# **list_networks**
-> NetworkSearchResponse list_networks(carrier_id, page=page, per_page=per_page)
+# **show_formulary_drug_package_coverage**
+> FormularyDrugPackageResponse show_formulary_drug_package_coverage(formulary_id, ndc_package_code)
 
-Networks
+Formulary Drug Package Search
 
-A network is a list of the doctors, other health care providers, and hospitals that a plan has contracted with to provide medical care to its members. This endpoint is paginated.
+Search for coverage by Formulary and DrugPackage ID
 
 ### Example 
 ```python
@@ -28,30 +28,28 @@ vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
 # vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = vericred_client.NetworksApi()
-carrier_id = '33333' # str | Carrier HIOS Issuer ID
-page = 1 # int | Page of paginated response (optional)
-per_page = 1 # int | Responses per page (optional)
+api_instance = vericred_client.DrugPackagesApi()
+formulary_id = '123' # str | ID of the Formulary in question
+ndc_package_code = '07777-3105-01' # str | ID of the DrugPackage in question
 
 try: 
-    # Networks
-    api_response = api_instance.list_networks(carrier_id, page=page, per_page=per_page)
+    # Formulary Drug Package Search
+    api_response = api_instance.show_formulary_drug_package_coverage(formulary_id, ndc_package_code)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling NetworksApi->list_networks: %s\n" % e)
+    print("Exception when calling DrugPackagesApi->show_formulary_drug_package_coverage: %s\n" % e)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **carrier_id** | **str**| Carrier HIOS Issuer ID | 
- **page** | **int**| Page of paginated response | [optional] 
- **per_page** | **int**| Responses per page | [optional] 
+ **formulary_id** | **str**| ID of the Formulary in question | 
+ **ndc_package_code** | **str**| ID of the DrugPackage in question | 
 
 ### Return type
 
-[**NetworkSearchResponse**](NetworkSearchResponse.md)
+[**FormularyDrugPackageResponse**](FormularyDrugPackageResponse.md)
 
 ### Authorization
 
