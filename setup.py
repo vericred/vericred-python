@@ -95,7 +95,7 @@ document.
 In this case, we want to select `name` and `phone` from the `provider` key,
 so we would add the parameters `select=provider.name,provider.phone`.
 We also want the `name` and `code` from the `states` key, so we would
-add the parameters `select=states.name,staes.code`.  The id field of
+add the parameters `select=states.name,states.code`.  The id field of
 each document is always returned whether or not it is requested.
 
 Our final request would be `GET /providers/12345?select=provider.name,provider.phone,states.name,states.code`
@@ -150,19 +150,53 @@ In [this other Summary of Benefits &amp; Coverage](https://s3.amazonaws.com/veri
 Here's a description of the benefits summary string, represented as a context-free grammar:
 
 ```
-<cost-share>     ::= <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> <tier-limit> "/" <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> "|" <benefit-limit>
-<tier>           ::= "In-Network:" | "In-Network-Tier-2:" | "Out-of-Network:"
-<opt-num-prefix> ::= "first" <num> <unit> | ""
-<unit>           ::= "day(s)" | "visit(s)" | "exam(s)" | "item(s)"
-<value>          ::= <ddct_moop> | <copay> | <coinsurance> | <compound> | "unknown" | "Not Applicable"
-<compound>       ::= <copay> <deductible> "then" <coinsurance> <deductible> | <copay> <deductible> "then" <copay> <deductible> | <coinsurance> <deductible> "then" <coinsurance> <deductible>
-<copay>          ::= "$" <num>
-<coinsurace>     ::= <num> "%"
-<ddct_moop>      ::= <copay> | "Included in Medical" | "Unlimited"
-<opt-per-unit>   ::= "per day" | "per visit" | "per stay" | ""
-<deductible>     ::= "before deductible" | "after deductible" | ""
-<tier-limit>     ::= ", " <limit> | ""
-<benefit-limit>  ::= <limit> | ""
+root                      ::= coverage
+
+coverage                  ::= (simple_coverage | tiered_coverage) (space pipe space coverage_modifier)?
+tiered_coverage           ::= tier (space slash space tier)*
+tier                      ::= tier_name colon space (tier_coverage | not_applicable)
+tier_coverage             ::= simple_coverage (space (then | or | and) space simple_coverage)* tier_limitation?
+simple_coverage           ::= (pre_coverage_limitation space)? coverage_amount (space post_coverage_limitation)? (comma? space coverage_condition)?
+coverage_modifier         ::= limit_condition colon space (((simple_coverage | simple_limitation) (semicolon space see_carrier_documentation)?) | see_carrier_documentation | waived_if_admitted | shared_across_tiers)
+waived_if_admitted        ::= ("copay" space)? "waived if admitted"
+simple_limitation         ::= pre_coverage_limitation space "copay applies"
+tier_name                 ::= "In-Network-Tier-2" | "Out-of-Network" | "In-Network"
+limit_condition           ::= "limit" | "condition"
+tier_limitation           ::= comma space "up to" space (currency | (integer space time_unit plural?)) (space post_coverage_limitation)?
+coverage_amount           ::= currency | unlimited | included | unknown | percentage | (digits space (treatment_unit | time_unit) plural?)
+pre_coverage_limitation   ::= first space digits space time_unit plural?
+post_coverage_limitation  ::= (((then space currency) | "per condition") space)? "per" space (treatment_unit | (integer space time_unit) | time_unit) plural?
+coverage_condition        ::= ("before deductible" | "after deductible" | "penalty" | allowance | "in-state" | "out-of-state") (space allowance)?
+allowance                 ::= upto_allowance | after_allowance
+upto_allowance            ::= "up to" space (currency space)? "allowance"
+after_allowance           ::= "after" space (currency space)? "allowance"
+see_carrier_documentation ::= "see carrier documentation for more information"
+shared_across_tiers       ::= "shared across all tiers"
+unknown                   ::= "unknown"
+unlimited                 ::= /[uU]nlimited/
+included                  ::= /[iI]ncluded in [mM]edical/
+time_unit                 ::= /[hH]our/ | (((/[cC]alendar/ | /[cC]ontract/) space)? /[yY]ear/) | /[mM]onth/ | /[dD]ay/ | /[wW]eek/ | /[vV]isit/ | /[lL]ifetime/ | ((((/[bB]enefit/ plural?) | /[eE]ligibility/) space)? /[pP]eriod/)
+treatment_unit            ::= /[pP]erson/ | /[gG]roup/ | /[cC]ondition/ | /[sS]cript/ | /[vV]isit/ | /[eE]xam/ | /[iI]tem/ | /[sS]tay/ | /[tT]reatment/ | /[aA]dmission/ | /[eE]pisode/
+comma                     ::= ","
+colon                     ::= ":"
+semicolon                 ::= ";"
+pipe                      ::= "|"
+slash                     ::= "/"
+plural                    ::= "(s)" | "s"
+then                      ::= "then" | ("," space) | space
+or                        ::= "or"
+and                       ::= "and"
+not_applicable            ::= "Not Applicable" | "N/A" | "NA"
+first                     ::= "first"
+currency                  ::= "$" number
+percentage                ::= number "%"
+number                    ::= float | integer
+float                     ::= digits "." digits
+integer                   ::= /[0-9]/+ (comma_int | under_int)*
+comma_int                 ::= ("," /[0-9]/*3) !"_"
+under_int                 ::= ("_" /[0-9]/*3) !","
+digits                    ::= /[0-9]/+ ("_" /[0-9]/+)*
+space                     ::= /[ \t]/+
 ```
 
 
@@ -188,7 +222,7 @@ import sys
 from setuptools import setup, find_packages
 
 NAME = "vericred_client"
-VERSION = "0.0.8"
+VERSION = "0.0.11"
 
 # To install the library, run the following
 #
@@ -302,7 +336,7 @@ document.
 In this case, we want to select &#x60;name&#x60; and &#x60;phone&#x60; from the &#x60;provider&#x60; key,
 so we would add the parameters &#x60;select&#x3D;provider.name,provider.phone&#x60;.
 We also want the &#x60;name&#x60; and &#x60;code&#x60; from the &#x60;states&#x60; key, so we would
-add the parameters &#x60;select&#x3D;states.name,staes.code&#x60;.  The id field of
+add the parameters &#x60;select&#x3D;states.name,states.code&#x60;.  The id field of
 each document is always returned whether or not it is requested.
 
 Our final request would be &#x60;GET /providers/12345?select&#x3D;provider.name,provider.phone,states.name,states.code&#x60;
@@ -357,19 +391,53 @@ In [this other Summary of Benefits &amp;amp; Coverage](https://s3.amazonaws.com/
 Here&#39;s a description of the benefits summary string, represented as a context-free grammar:
 
 &#x60;&#x60;&#x60;
-&lt;cost-share&gt;     ::&#x3D; &lt;tier&gt; &lt;opt-num-prefix&gt; &lt;value&gt; &lt;opt-per-unit&gt; &lt;deductible&gt; &lt;tier-limit&gt; &quot;/&quot; &lt;tier&gt; &lt;opt-num-prefix&gt; &lt;value&gt; &lt;opt-per-unit&gt; &lt;deductible&gt; &quot;|&quot; &lt;benefit-limit&gt;
-&lt;tier&gt;           ::&#x3D; &quot;In-Network:&quot; | &quot;In-Network-Tier-2:&quot; | &quot;Out-of-Network:&quot;
-&lt;opt-num-prefix&gt; ::&#x3D; &quot;first&quot; &lt;num&gt; &lt;unit&gt; | &quot;&quot;
-&lt;unit&gt;           ::&#x3D; &quot;day(s)&quot; | &quot;visit(s)&quot; | &quot;exam(s)&quot; | &quot;item(s)&quot;
-&lt;value&gt;          ::&#x3D; &lt;ddct_moop&gt; | &lt;copay&gt; | &lt;coinsurance&gt; | &lt;compound&gt; | &quot;unknown&quot; | &quot;Not Applicable&quot;
-&lt;compound&gt;       ::&#x3D; &lt;copay&gt; &lt;deductible&gt; &quot;then&quot; &lt;coinsurance&gt; &lt;deductible&gt; | &lt;copay&gt; &lt;deductible&gt; &quot;then&quot; &lt;copay&gt; &lt;deductible&gt; | &lt;coinsurance&gt; &lt;deductible&gt; &quot;then&quot; &lt;coinsurance&gt; &lt;deductible&gt;
-&lt;copay&gt;          ::&#x3D; &quot;$&quot; &lt;num&gt;
-&lt;coinsurace&gt;     ::&#x3D; &lt;num&gt; &quot;%&quot;
-&lt;ddct_moop&gt;      ::&#x3D; &lt;copay&gt; | &quot;Included in Medical&quot; | &quot;Unlimited&quot;
-&lt;opt-per-unit&gt;   ::&#x3D; &quot;per day&quot; | &quot;per visit&quot; | &quot;per stay&quot; | &quot;&quot;
-&lt;deductible&gt;     ::&#x3D; &quot;before deductible&quot; | &quot;after deductible&quot; | &quot;&quot;
-&lt;tier-limit&gt;     ::&#x3D; &quot;, &quot; &lt;limit&gt; | &quot;&quot;
-&lt;benefit-limit&gt;  ::&#x3D; &lt;limit&gt; | &quot;&quot;
+root                      ::&#x3D; coverage
+
+coverage                  ::&#x3D; (simple_coverage | tiered_coverage) (space pipe space coverage_modifier)?
+tiered_coverage           ::&#x3D; tier (space slash space tier)*
+tier                      ::&#x3D; tier_name colon space (tier_coverage | not_applicable)
+tier_coverage             ::&#x3D; simple_coverage (space (then | or | and) space simple_coverage)* tier_limitation?
+simple_coverage           ::&#x3D; (pre_coverage_limitation space)? coverage_amount (space post_coverage_limitation)? (comma? space coverage_condition)?
+coverage_modifier         ::&#x3D; limit_condition colon space (((simple_coverage | simple_limitation) (semicolon space see_carrier_documentation)?) | see_carrier_documentation | waived_if_admitted | shared_across_tiers)
+waived_if_admitted        ::&#x3D; (&quot;copay&quot; space)? &quot;waived if admitted&quot;
+simple_limitation         ::&#x3D; pre_coverage_limitation space &quot;copay applies&quot;
+tier_name                 ::&#x3D; &quot;In-Network-Tier-2&quot; | &quot;Out-of-Network&quot; | &quot;In-Network&quot;
+limit_condition           ::&#x3D; &quot;limit&quot; | &quot;condition&quot;
+tier_limitation           ::&#x3D; comma space &quot;up to&quot; space (currency | (integer space time_unit plural?)) (space post_coverage_limitation)?
+coverage_amount           ::&#x3D; currency | unlimited | included | unknown | percentage | (digits space (treatment_unit | time_unit) plural?)
+pre_coverage_limitation   ::&#x3D; first space digits space time_unit plural?
+post_coverage_limitation  ::&#x3D; (((then space currency) | &quot;per condition&quot;) space)? &quot;per&quot; space (treatment_unit | (integer space time_unit) | time_unit) plural?
+coverage_condition        ::&#x3D; (&quot;before deductible&quot; | &quot;after deductible&quot; | &quot;penalty&quot; | allowance | &quot;in-state&quot; | &quot;out-of-state&quot;) (space allowance)?
+allowance                 ::&#x3D; upto_allowance | after_allowance
+upto_allowance            ::&#x3D; &quot;up to&quot; space (currency space)? &quot;allowance&quot;
+after_allowance           ::&#x3D; &quot;after&quot; space (currency space)? &quot;allowance&quot;
+see_carrier_documentation ::&#x3D; &quot;see carrier documentation for more information&quot;
+shared_across_tiers       ::&#x3D; &quot;shared across all tiers&quot;
+unknown                   ::&#x3D; &quot;unknown&quot;
+unlimited                 ::&#x3D; /[uU]nlimited/
+included                  ::&#x3D; /[iI]ncluded in [mM]edical/
+time_unit                 ::&#x3D; /[hH]our/ | (((/[cC]alendar/ | /[cC]ontract/) space)? /[yY]ear/) | /[mM]onth/ | /[dD]ay/ | /[wW]eek/ | /[vV]isit/ | /[lL]ifetime/ | ((((/[bB]enefit/ plural?) | /[eE]ligibility/) space)? /[pP]eriod/)
+treatment_unit            ::&#x3D; /[pP]erson/ | /[gG]roup/ | /[cC]ondition/ | /[sS]cript/ | /[vV]isit/ | /[eE]xam/ | /[iI]tem/ | /[sS]tay/ | /[tT]reatment/ | /[aA]dmission/ | /[eE]pisode/
+comma                     ::&#x3D; &quot;,&quot;
+colon                     ::&#x3D; &quot;:&quot;
+semicolon                 ::&#x3D; &quot;;&quot;
+pipe                      ::&#x3D; &quot;|&quot;
+slash                     ::&#x3D; &quot;/&quot;
+plural                    ::&#x3D; &quot;(s)&quot; | &quot;s&quot;
+then                      ::&#x3D; &quot;then&quot; | (&quot;,&quot; space) | space
+or                        ::&#x3D; &quot;or&quot;
+and                       ::&#x3D; &quot;and&quot;
+not_applicable            ::&#x3D; &quot;Not Applicable&quot; | &quot;N/A&quot; | &quot;NA&quot;
+first                     ::&#x3D; &quot;first&quot;
+currency                  ::&#x3D; &quot;$&quot; number
+percentage                ::&#x3D; number &quot;%&quot;
+number                    ::&#x3D; float | integer
+float                     ::&#x3D; digits &quot;.&quot; digits
+integer                   ::&#x3D; /[0-9]/+ (comma_int | under_int)*
+comma_int                 ::&#x3D; (&quot;,&quot; /[0-9]/*3) !&quot;_&quot;
+under_int                 ::&#x3D; (&quot;_&quot; /[0-9]/*3) !&quot;,&quot;
+digits                    ::&#x3D; /[0-9]/+ (&quot;_&quot; /[0-9]/+)*
+space                     ::&#x3D; /[ \t]/+
 &#x60;&#x60;&#x60;
 
 

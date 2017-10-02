@@ -95,7 +95,7 @@ document.
 In this case, we want to select `name` and `phone` from the `provider` key,
 so we would add the parameters `select=provider.name,provider.phone`.
 We also want the `name` and `code` from the `states` key, so we would
-add the parameters `select=states.name,staes.code`.  The id field of
+add the parameters `select=states.name,states.code`.  The id field of
 each document is always returned whether or not it is requested.
 
 Our final request would be `GET /providers/12345?select=provider.name,provider.phone,states.name,states.code`
@@ -150,19 +150,53 @@ In [this other Summary of Benefits &amp; Coverage](https://s3.amazonaws.com/veri
 Here's a description of the benefits summary string, represented as a context-free grammar:
 
 ```
-<cost-share>     ::= <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> <tier-limit> "/" <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> "|" <benefit-limit>
-<tier>           ::= "In-Network:" | "In-Network-Tier-2:" | "Out-of-Network:"
-<opt-num-prefix> ::= "first" <num> <unit> | ""
-<unit>           ::= "day(s)" | "visit(s)" | "exam(s)" | "item(s)"
-<value>          ::= <ddct_moop> | <copay> | <coinsurance> | <compound> | "unknown" | "Not Applicable"
-<compound>       ::= <copay> <deductible> "then" <coinsurance> <deductible> | <copay> <deductible> "then" <copay> <deductible> | <coinsurance> <deductible> "then" <coinsurance> <deductible>
-<copay>          ::= "$" <num>
-<coinsurace>     ::= <num> "%"
-<ddct_moop>      ::= <copay> | "Included in Medical" | "Unlimited"
-<opt-per-unit>   ::= "per day" | "per visit" | "per stay" | ""
-<deductible>     ::= "before deductible" | "after deductible" | ""
-<tier-limit>     ::= ", " <limit> | ""
-<benefit-limit>  ::= <limit> | ""
+root                      ::= coverage
+
+coverage                  ::= (simple_coverage | tiered_coverage) (space pipe space coverage_modifier)?
+tiered_coverage           ::= tier (space slash space tier)*
+tier                      ::= tier_name colon space (tier_coverage | not_applicable)
+tier_coverage             ::= simple_coverage (space (then | or | and) space simple_coverage)* tier_limitation?
+simple_coverage           ::= (pre_coverage_limitation space)? coverage_amount (space post_coverage_limitation)? (comma? space coverage_condition)?
+coverage_modifier         ::= limit_condition colon space (((simple_coverage | simple_limitation) (semicolon space see_carrier_documentation)?) | see_carrier_documentation | waived_if_admitted | shared_across_tiers)
+waived_if_admitted        ::= ("copay" space)? "waived if admitted"
+simple_limitation         ::= pre_coverage_limitation space "copay applies"
+tier_name                 ::= "In-Network-Tier-2" | "Out-of-Network" | "In-Network"
+limit_condition           ::= "limit" | "condition"
+tier_limitation           ::= comma space "up to" space (currency | (integer space time_unit plural?)) (space post_coverage_limitation)?
+coverage_amount           ::= currency | unlimited | included | unknown | percentage | (digits space (treatment_unit | time_unit) plural?)
+pre_coverage_limitation   ::= first space digits space time_unit plural?
+post_coverage_limitation  ::= (((then space currency) | "per condition") space)? "per" space (treatment_unit | (integer space time_unit) | time_unit) plural?
+coverage_condition        ::= ("before deductible" | "after deductible" | "penalty" | allowance | "in-state" | "out-of-state") (space allowance)?
+allowance                 ::= upto_allowance | after_allowance
+upto_allowance            ::= "up to" space (currency space)? "allowance"
+after_allowance           ::= "after" space (currency space)? "allowance"
+see_carrier_documentation ::= "see carrier documentation for more information"
+shared_across_tiers       ::= "shared across all tiers"
+unknown                   ::= "unknown"
+unlimited                 ::= /[uU]nlimited/
+included                  ::= /[iI]ncluded in [mM]edical/
+time_unit                 ::= /[hH]our/ | (((/[cC]alendar/ | /[cC]ontract/) space)? /[yY]ear/) | /[mM]onth/ | /[dD]ay/ | /[wW]eek/ | /[vV]isit/ | /[lL]ifetime/ | ((((/[bB]enefit/ plural?) | /[eE]ligibility/) space)? /[pP]eriod/)
+treatment_unit            ::= /[pP]erson/ | /[gG]roup/ | /[cC]ondition/ | /[sS]cript/ | /[vV]isit/ | /[eE]xam/ | /[iI]tem/ | /[sS]tay/ | /[tT]reatment/ | /[aA]dmission/ | /[eE]pisode/
+comma                     ::= ","
+colon                     ::= ":"
+semicolon                 ::= ";"
+pipe                      ::= "|"
+slash                     ::= "/"
+plural                    ::= "(s)" | "s"
+then                      ::= "then" | ("," space) | space
+or                        ::= "or"
+and                       ::= "and"
+not_applicable            ::= "Not Applicable" | "N/A" | "NA"
+first                     ::= "first"
+currency                  ::= "$" number
+percentage                ::= number "%"
+number                    ::= float | integer
+float                     ::= digits "." digits
+integer                   ::= /[0-9]/+ (comma_int | under_int)*
+comma_int                 ::= ("," /[0-9]/*3) !"_"
+under_int                 ::= ("_" /[0-9]/*3) !","
+digits                    ::= /[0-9]/+ ("_" /[0-9]/+)*
+space                     ::= /[ \t]/+
 ```
 
 
@@ -187,8 +221,18 @@ Here's a description of the benefits summary string, represented as a context-fr
 from __future__ import absolute_import
 
 # import models into model package
+from .aca_plan import ACAPlan
+from .aca_plan2018 import ACAPlan2018
+from .aca_plan2018_search_response import ACAPlan2018SearchResponse
+from .aca_plan2018_search_result import ACAPlan2018SearchResult
+from .aca_plan2018_show_response import ACAPlan2018ShowResponse
+from .aca_plan_pre2018 import ACAPlanPre2018
+from .aca_plan_pre2018_search_response import ACAPlanPre2018SearchResponse
+from .aca_plan_pre2018_search_result import ACAPlanPre2018SearchResult
+from .aca_plan_pre2018_show_response import ACAPlanPre2018ShowResponse
 from .applicant import Applicant
 from .base import Base
+from .base_plan_search_response import BasePlanSearchResponse
 from .carrier import Carrier
 from .carrier_subsidiary import CarrierSubsidiary
 from .county import County
@@ -202,22 +246,31 @@ from .formulary import Formulary
 from .formulary_drug_package_response import FormularyDrugPackageResponse
 from .formulary_response import FormularyResponse
 from .meta import Meta
+from .meta_plan_search_response import MetaPlanSearchResponse
 from .network import Network
+from .network_comparison import NetworkComparison
+from .network_comparison_request import NetworkComparisonRequest
+from .network_comparison_response import NetworkComparisonResponse
 from .network_details import NetworkDetails
 from .network_details_response import NetworkDetailsResponse
 from .network_search_response import NetworkSearchResponse
 from .network_size import NetworkSize
+from .notification_subscription import NotificationSubscription
+from .notification_subscription_response import NotificationSubscriptionResponse
 from .plan import Plan
 from .plan_county import PlanCounty
 from .plan_county_bulk import PlanCountyBulk
+from .plan_deleted import PlanDeleted
+from .plan_identifier import PlanIdentifier
+from .plan_medicare import PlanMedicare
+from .plan_medicare_bulk import PlanMedicareBulk
+from .plan_pricing_medicare import PlanPricingMedicare
 from .plan_search_response import PlanSearchResponse
-from .plan_search_response_meta import PlanSearchResponseMeta
-from .plan_search_result import PlanSearchResult
 from .plan_show_response import PlanShowResponse
-from .pricing import Pricing
 from .provider import Provider
 from .provider_details import ProviderDetails
 from .provider_geocode import ProviderGeocode
+from .provider_network_event_notification import ProviderNetworkEventNotification
 from .provider_show_response import ProviderShowResponse
 from .providers_geocode_response import ProvidersGeocodeResponse
 from .providers_search_response import ProvidersSearchResponse
@@ -226,13 +279,15 @@ from .request_plan_find import RequestPlanFind
 from .request_plan_find_applicant import RequestPlanFindApplicant
 from .request_plan_find_drug_package import RequestPlanFindDrugPackage
 from .request_plan_find_provider import RequestPlanFindProvider
+from .request_provider_notification_subscription import RequestProviderNotificationSubscription
 from .request_providers_search import RequestProvidersSearch
+from .rx_cui_identifier import RxCuiIdentifier
+from .rx_cui_identifier_search_response import RxCuiIdentifierSearchResponse
 from .service_area import ServiceArea
 from .service_area_zip_county import ServiceAreaZipCounty
 from .state import State
 from .state_network_size_request import StateNetworkSizeRequest
 from .state_network_size_response import StateNetworkSizeResponse
-from .vendored_plan_bulk import VendoredPlanBulk
 from .zip_code import ZipCode
 from .zip_counties_response import ZipCountiesResponse
 from .zip_county import ZipCounty
