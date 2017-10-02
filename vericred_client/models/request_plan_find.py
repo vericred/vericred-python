@@ -95,7 +95,7 @@ document.
 In this case, we want to select `name` and `phone` from the `provider` key,
 so we would add the parameters `select=provider.name,provider.phone`.
 We also want the `name` and `code` from the `states` key, so we would
-add the parameters `select=states.name,staes.code`.  The id field of
+add the parameters `select=states.name,states.code`.  The id field of
 each document is always returned whether or not it is requested.
 
 Our final request would be `GET /providers/12345?select=provider.name,provider.phone,states.name,states.code`
@@ -150,19 +150,53 @@ In [this other Summary of Benefits &amp; Coverage](https://s3.amazonaws.com/veri
 Here's a description of the benefits summary string, represented as a context-free grammar:
 
 ```
-<cost-share>     ::= <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> <tier-limit> "/" <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> "|" <benefit-limit>
-<tier>           ::= "In-Network:" | "In-Network-Tier-2:" | "Out-of-Network:"
-<opt-num-prefix> ::= "first" <num> <unit> | ""
-<unit>           ::= "day(s)" | "visit(s)" | "exam(s)" | "item(s)"
-<value>          ::= <ddct_moop> | <copay> | <coinsurance> | <compound> | "unknown" | "Not Applicable"
-<compound>       ::= <copay> <deductible> "then" <coinsurance> <deductible> | <copay> <deductible> "then" <copay> <deductible> | <coinsurance> <deductible> "then" <coinsurance> <deductible>
-<copay>          ::= "$" <num>
-<coinsurace>     ::= <num> "%"
-<ddct_moop>      ::= <copay> | "Included in Medical" | "Unlimited"
-<opt-per-unit>   ::= "per day" | "per visit" | "per stay" | ""
-<deductible>     ::= "before deductible" | "after deductible" | ""
-<tier-limit>     ::= ", " <limit> | ""
-<benefit-limit>  ::= <limit> | ""
+root                      ::= coverage
+
+coverage                  ::= (simple_coverage | tiered_coverage) (space pipe space coverage_modifier)?
+tiered_coverage           ::= tier (space slash space tier)*
+tier                      ::= tier_name colon space (tier_coverage | not_applicable)
+tier_coverage             ::= simple_coverage (space (then | or | and) space simple_coverage)* tier_limitation?
+simple_coverage           ::= (pre_coverage_limitation space)? coverage_amount (space post_coverage_limitation)? (comma? space coverage_condition)?
+coverage_modifier         ::= limit_condition colon space (((simple_coverage | simple_limitation) (semicolon space see_carrier_documentation)?) | see_carrier_documentation | waived_if_admitted | shared_across_tiers)
+waived_if_admitted        ::= ("copay" space)? "waived if admitted"
+simple_limitation         ::= pre_coverage_limitation space "copay applies"
+tier_name                 ::= "In-Network-Tier-2" | "Out-of-Network" | "In-Network"
+limit_condition           ::= "limit" | "condition"
+tier_limitation           ::= comma space "up to" space (currency | (integer space time_unit plural?)) (space post_coverage_limitation)?
+coverage_amount           ::= currency | unlimited | included | unknown | percentage | (digits space (treatment_unit | time_unit) plural?)
+pre_coverage_limitation   ::= first space digits space time_unit plural?
+post_coverage_limitation  ::= (((then space currency) | "per condition") space)? "per" space (treatment_unit | (integer space time_unit) | time_unit) plural?
+coverage_condition        ::= ("before deductible" | "after deductible" | "penalty" | allowance | "in-state" | "out-of-state") (space allowance)?
+allowance                 ::= upto_allowance | after_allowance
+upto_allowance            ::= "up to" space (currency space)? "allowance"
+after_allowance           ::= "after" space (currency space)? "allowance"
+see_carrier_documentation ::= "see carrier documentation for more information"
+shared_across_tiers       ::= "shared across all tiers"
+unknown                   ::= "unknown"
+unlimited                 ::= /[uU]nlimited/
+included                  ::= /[iI]ncluded in [mM]edical/
+time_unit                 ::= /[hH]our/ | (((/[cC]alendar/ | /[cC]ontract/) space)? /[yY]ear/) | /[mM]onth/ | /[dD]ay/ | /[wW]eek/ | /[vV]isit/ | /[lL]ifetime/ | ((((/[bB]enefit/ plural?) | /[eE]ligibility/) space)? /[pP]eriod/)
+treatment_unit            ::= /[pP]erson/ | /[gG]roup/ | /[cC]ondition/ | /[sS]cript/ | /[vV]isit/ | /[eE]xam/ | /[iI]tem/ | /[sS]tay/ | /[tT]reatment/ | /[aA]dmission/ | /[eE]pisode/
+comma                     ::= ","
+colon                     ::= ":"
+semicolon                 ::= ";"
+pipe                      ::= "|"
+slash                     ::= "/"
+plural                    ::= "(s)" | "s"
+then                      ::= "then" | ("," space) | space
+or                        ::= "or"
+and                       ::= "and"
+not_applicable            ::= "Not Applicable" | "N/A" | "NA"
+first                     ::= "first"
+currency                  ::= "$" number
+percentage                ::= number "%"
+number                    ::= float | integer
+float                     ::= digits "." digits
+integer                   ::= /[0-9]/+ (comma_int | under_int)*
+comma_int                 ::= ("," /[0-9]/*3) !"_"
+under_int                 ::= ("_" /[0-9]/*3) !","
+digits                    ::= /[0-9]/+ ("_" /[0-9]/+)*
+space                     ::= /[ \t]/+
 ```
 
 
@@ -194,7 +228,7 @@ class RequestPlanFind(object):
     NOTE: This class is auto generated by the swagger code generator program.
     Do not edit the class manually.
     """
-    def __init__(self, applicants=None, enrollment_date=None, drug_packages=None, fips_code=None, household_income=None, household_size=None, ids=None, market=None, providers=None, page=None, per_page=None, sort=None, zip_code=None):
+    def __init__(self, applicants=None, carrier_id=None, enrollment_date=None, drug_packages=None, fips_code=None, group_name=None, household_income=None, household_size=None, ids=None, market=None, providers=None, page=None, per_page=None, sort=None, zip_code=None):
         """
         RequestPlanFind - a model defined in Swagger
 
@@ -205,9 +239,11 @@ class RequestPlanFind(object):
         """
         self.swagger_types = {
             'applicants': 'list[RequestPlanFindApplicant]',
+            'carrier_id': 'int',
             'enrollment_date': 'str',
             'drug_packages': 'list[RequestPlanFindDrugPackage]',
             'fips_code': 'str',
+            'group_name': 'str',
             'household_income': 'int',
             'household_size': 'int',
             'ids': 'list[int]',
@@ -221,9 +257,11 @@ class RequestPlanFind(object):
 
         self.attribute_map = {
             'applicants': 'applicants',
+            'carrier_id': 'carrier_id',
             'enrollment_date': 'enrollment_date',
             'drug_packages': 'drug_packages',
             'fips_code': 'fips_code',
+            'group_name': 'group_name',
             'household_income': 'household_income',
             'household_size': 'household_size',
             'ids': 'ids',
@@ -236,9 +274,11 @@ class RequestPlanFind(object):
         }
 
         self._applicants = applicants
+        self._carrier_id = carrier_id
         self._enrollment_date = enrollment_date
         self._drug_packages = drug_packages
         self._fips_code = fips_code
+        self._group_name = group_name
         self._household_income = household_income
         self._household_size = household_size
         self._ids = ids
@@ -272,6 +312,29 @@ class RequestPlanFind(object):
         """
 
         self._applicants = applicants
+
+    @property
+    def carrier_id(self):
+        """
+        Gets the carrier_id of this RequestPlanFind.
+        National-level carrier id
+
+        :return: The carrier_id of this RequestPlanFind.
+        :rtype: int
+        """
+        return self._carrier_id
+
+    @carrier_id.setter
+    def carrier_id(self, carrier_id):
+        """
+        Sets the carrier_id of this RequestPlanFind.
+        National-level carrier id
+
+        :param carrier_id: The carrier_id of this RequestPlanFind.
+        :type: int
+        """
+
+        self._carrier_id = carrier_id
 
     @property
     def enrollment_date(self):
@@ -341,6 +404,29 @@ class RequestPlanFind(object):
         """
 
         self._fips_code = fips_code
+
+    @property
+    def group_name(self):
+        """
+        Gets the group_name of this RequestPlanFind.
+        Label for search tracking
+
+        :return: The group_name of this RequestPlanFind.
+        :rtype: str
+        """
+        return self._group_name
+
+    @group_name.setter
+    def group_name(self, group_name):
+        """
+        Sets the group_name of this RequestPlanFind.
+        Label for search tracking
+
+        :param group_name: The group_name of this RequestPlanFind.
+        :type: str
+        """
+
+        self._group_name = group_name
 
     @property
     def household_income(self):

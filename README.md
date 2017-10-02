@@ -91,7 +91,7 @@ document.
 In this case, we want to select `name` and `phone` from the `provider` key,
 so we would add the parameters `select=provider.name,provider.phone`.
 We also want the `name` and `code` from the `states` key, so we would
-add the parameters `select=states.name,staes.code`.  The id field of
+add the parameters `select=states.name,states.code`.  The id field of
 each document is always returned whether or not it is requested.
 
 Our final request would be `GET /providers/12345?select=provider.name,provider.phone,states.name,states.code`
@@ -146,19 +146,53 @@ In [this other Summary of Benefits &amp; Coverage](https://s3.amazonaws.com/veri
 Here's a description of the benefits summary string, represented as a context-free grammar:
 
 ```
-<cost-share>     ::= <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> <tier-limit> "/" <tier> <opt-num-prefix> <value> <opt-per-unit> <deductible> "|" <benefit-limit>
-<tier>           ::= "In-Network:" | "In-Network-Tier-2:" | "Out-of-Network:"
-<opt-num-prefix> ::= "first" <num> <unit> | ""
-<unit>           ::= "day(s)" | "visit(s)" | "exam(s)" | "item(s)"
-<value>          ::= <ddct_moop> | <copay> | <coinsurance> | <compound> | "unknown" | "Not Applicable"
-<compound>       ::= <copay> <deductible> "then" <coinsurance> <deductible> | <copay> <deductible> "then" <copay> <deductible> | <coinsurance> <deductible> "then" <coinsurance> <deductible>
-<copay>          ::= "$" <num>
-<coinsurace>     ::= <num> "%"
-<ddct_moop>      ::= <copay> | "Included in Medical" | "Unlimited"
-<opt-per-unit>   ::= "per day" | "per visit" | "per stay" | ""
-<deductible>     ::= "before deductible" | "after deductible" | ""
-<tier-limit>     ::= ", " <limit> | ""
-<benefit-limit>  ::= <limit> | ""
+root                      ::= coverage
+
+coverage                  ::= (simple_coverage | tiered_coverage) (space pipe space coverage_modifier)?
+tiered_coverage           ::= tier (space slash space tier)*
+tier                      ::= tier_name colon space (tier_coverage | not_applicable)
+tier_coverage             ::= simple_coverage (space (then | or | and) space simple_coverage)* tier_limitation?
+simple_coverage           ::= (pre_coverage_limitation space)? coverage_amount (space post_coverage_limitation)? (comma? space coverage_condition)?
+coverage_modifier         ::= limit_condition colon space (((simple_coverage | simple_limitation) (semicolon space see_carrier_documentation)?) | see_carrier_documentation | waived_if_admitted | shared_across_tiers)
+waived_if_admitted        ::= ("copay" space)? "waived if admitted"
+simple_limitation         ::= pre_coverage_limitation space "copay applies"
+tier_name                 ::= "In-Network-Tier-2" | "Out-of-Network" | "In-Network"
+limit_condition           ::= "limit" | "condition"
+tier_limitation           ::= comma space "up to" space (currency | (integer space time_unit plural?)) (space post_coverage_limitation)?
+coverage_amount           ::= currency | unlimited | included | unknown | percentage | (digits space (treatment_unit | time_unit) plural?)
+pre_coverage_limitation   ::= first space digits space time_unit plural?
+post_coverage_limitation  ::= (((then space currency) | "per condition") space)? "per" space (treatment_unit | (integer space time_unit) | time_unit) plural?
+coverage_condition        ::= ("before deductible" | "after deductible" | "penalty" | allowance | "in-state" | "out-of-state") (space allowance)?
+allowance                 ::= upto_allowance | after_allowance
+upto_allowance            ::= "up to" space (currency space)? "allowance"
+after_allowance           ::= "after" space (currency space)? "allowance"
+see_carrier_documentation ::= "see carrier documentation for more information"
+shared_across_tiers       ::= "shared across all tiers"
+unknown                   ::= "unknown"
+unlimited                 ::= /[uU]nlimited/
+included                  ::= /[iI]ncluded in [mM]edical/
+time_unit                 ::= /[hH]our/ | (((/[cC]alendar/ | /[cC]ontract/) space)? /[yY]ear/) | /[mM]onth/ | /[dD]ay/ | /[wW]eek/ | /[vV]isit/ | /[lL]ifetime/ | ((((/[bB]enefit/ plural?) | /[eE]ligibility/) space)? /[pP]eriod/)
+treatment_unit            ::= /[pP]erson/ | /[gG]roup/ | /[cC]ondition/ | /[sS]cript/ | /[vV]isit/ | /[eE]xam/ | /[iI]tem/ | /[sS]tay/ | /[tT]reatment/ | /[aA]dmission/ | /[eE]pisode/
+comma                     ::= ","
+colon                     ::= ":"
+semicolon                 ::= ";"
+pipe                      ::= "|"
+slash                     ::= "/"
+plural                    ::= "(s)" | "s"
+then                      ::= "then" | ("," space) | space
+or                        ::= "or"
+and                       ::= "and"
+not_applicable            ::= "Not Applicable" | "N/A" | "NA"
+first                     ::= "first"
+currency                  ::= "$" number
+percentage                ::= number "%"
+number                    ::= float | integer
+float                     ::= digits "." digits
+integer                   ::= /[0-9]/+ (comma_int | under_int)*
+comma_int                 ::= ("," /[0-9]/*3) !"_"
+under_int                 ::= ("_" /[0-9]/*3) !","
+digits                    ::= /[0-9]/+ ("_" /[0-9]/+)*
+space                     ::= /[ \t]/+
 ```
 
 
@@ -166,7 +200,7 @@ Here's a description of the benefits summary string, represented as a context-fr
 This Python package is automatically generated by the [Swagger Codegen](https://github.com/swagger-api/swagger-codegen) project:
 
 - API version: 1.0.0
-- Package version: 0.0.8
+- Package version: 0.0.11
 - Build package: class io.swagger.codegen.languages.PythonClientCodegen
 
 ## Requirements.
@@ -218,16 +252,17 @@ vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
 # create an instance of the API class
-api_instance = vericred_client.DrugPackagesApi
-formulary_id = '123' # str | ID of the Formulary in question
-ndc_package_code = '07777-3105-01' # str | ID of the DrugPackage in question
+api_instance = vericred_client.DrugCoveragesApi
+ndc_package_code = '07777-3105-01' # str | NDC package code
+audience = 'individual' # str | Plan Audience (individual or small_group)
+state_code = 'CA' # str | Two-character state code
 
 try:
-    # Formulary Drug Package Search
-    api_response = api_instance.show_formulary_drug_package_coverage(formulary_id, ndc_package_code)
+    # Search for DrugCoverages
+    api_response = api_instance.get_drug_coverages(ndc_package_code, audience, state_code)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DrugPackagesApi->show_formulary_drug_package_coverage: %s\n" % e)
+    print("Exception when calling DrugCoveragesApi->get_drug_coverages: %s\n" % e)
 
 ```
 
@@ -237,25 +272,41 @@ All URIs are relative to *https://api.vericred.com/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DrugCoveragesApi* | [**get_drug_coverages**](docs/DrugCoveragesApi.md#get_drug_coverages) | **GET** /drug_packages/{ndc_package_code}/coverages | Search for DrugCoverages
 *DrugPackagesApi* | [**show_formulary_drug_package_coverage**](docs/DrugPackagesApi.md#show_formulary_drug_package_coverage) | **GET** /formularies/{formulary_id}/drug_packages/{ndc_package_code} | Formulary Drug Package Search
-*DrugsApi* | [**get_drug_coverages**](docs/DrugsApi.md#get_drug_coverages) | **GET** /drug_packages/{ndc_package_code}/coverages | Search for DrugCoverages
 *DrugsApi* | [**list_drugs**](docs/DrugsApi.md#list_drugs) | **GET** /drugs | Drug Search
+*FormulariesApi* | [**list_formularies**](docs/FormulariesApi.md#list_formularies) | **GET** /formularies | Formulary Search
 *NetworkSizesApi* | [**list_state_network_sizes**](docs/NetworkSizesApi.md#list_state_network_sizes) | **GET** /states/{state_id}/network_sizes | State Network Sizes
 *NetworkSizesApi* | [**search_network_sizes**](docs/NetworkSizesApi.md#search_network_sizes) | **POST** /network_sizes/search | Network Sizes
+*NetworksApi* | [**create_network_comparisons**](docs/NetworksApi.md#create_network_comparisons) | **POST** /networks/{id}/network_comparisons | Network Comparisons
 *NetworksApi* | [**list_networks**](docs/NetworksApi.md#list_networks) | **GET** /networks | Networks
 *NetworksApi* | [**show_network**](docs/NetworksApi.md#show_network) | **GET** /networks/{id} | Network Details
 *PlansApi* | [**find_plans**](docs/PlansApi.md#find_plans) | **POST** /plans/search | Find Plans
 *PlansApi* | [**show_plan**](docs/PlansApi.md#show_plan) | **GET** /plans/{id} | Show Plan
+*ProviderNotificationSubscriptionsApi* | [**create_provider_notification_subscription**](docs/ProviderNotificationSubscriptionsApi.md#create_provider_notification_subscription) | **POST** /providers/subscription | Subscribe
+*ProviderNotificationSubscriptionsApi* | [**delete_provider_notification_subscription**](docs/ProviderNotificationSubscriptionsApi.md#delete_provider_notification_subscription) | **DELETE** /providers/subscription/{nonce} | Unsubscribe
+*ProviderNotificationSubscriptionsApi* | [**notify_provider_notification_subscription**](docs/ProviderNotificationSubscriptionsApi.md#notify_provider_notification_subscription) | **POST** /CALLBACK_URL | Webhook
 *ProvidersApi* | [**get_provider**](docs/ProvidersApi.md#get_provider) | **GET** /providers/{npi} | Find a Provider
 *ProvidersApi* | [**get_providers**](docs/ProvidersApi.md#get_providers) | **POST** /providers/search | Find Providers
 *ProvidersApi* | [**get_providers_0**](docs/ProvidersApi.md#get_providers_0) | **POST** /providers/search/geocode | Find Providers
 *ZipCountiesApi* | [**get_zip_counties**](docs/ZipCountiesApi.md#get_zip_counties) | **GET** /zip_counties | Search for Zip Counties
+*ZipCountiesApi* | [**show_zip_county**](docs/ZipCountiesApi.md#show_zip_county) | **GET** /zip_counties/{id} | Show an individual ZipCounty
 
 
 ## Documentation For Models
 
+ - [ACAPlan](docs/ACAPlan.md)
+ - [ACAPlan2018](docs/ACAPlan2018.md)
+ - [ACAPlan2018SearchResponse](docs/ACAPlan2018SearchResponse.md)
+ - [ACAPlan2018SearchResult](docs/ACAPlan2018SearchResult.md)
+ - [ACAPlan2018ShowResponse](docs/ACAPlan2018ShowResponse.md)
+ - [ACAPlanPre2018](docs/ACAPlanPre2018.md)
+ - [ACAPlanPre2018SearchResponse](docs/ACAPlanPre2018SearchResponse.md)
+ - [ACAPlanPre2018SearchResult](docs/ACAPlanPre2018SearchResult.md)
+ - [ACAPlanPre2018ShowResponse](docs/ACAPlanPre2018ShowResponse.md)
  - [Applicant](docs/Applicant.md)
  - [Base](docs/Base.md)
+ - [BasePlanSearchResponse](docs/BasePlanSearchResponse.md)
  - [Carrier](docs/Carrier.md)
  - [CarrierSubsidiary](docs/CarrierSubsidiary.md)
  - [County](docs/County.md)
@@ -269,22 +320,31 @@ Class | Method | HTTP request | Description
  - [FormularyDrugPackageResponse](docs/FormularyDrugPackageResponse.md)
  - [FormularyResponse](docs/FormularyResponse.md)
  - [Meta](docs/Meta.md)
+ - [MetaPlanSearchResponse](docs/MetaPlanSearchResponse.md)
  - [Network](docs/Network.md)
+ - [NetworkComparison](docs/NetworkComparison.md)
+ - [NetworkComparisonRequest](docs/NetworkComparisonRequest.md)
+ - [NetworkComparisonResponse](docs/NetworkComparisonResponse.md)
  - [NetworkDetails](docs/NetworkDetails.md)
  - [NetworkDetailsResponse](docs/NetworkDetailsResponse.md)
  - [NetworkSearchResponse](docs/NetworkSearchResponse.md)
  - [NetworkSize](docs/NetworkSize.md)
+ - [NotificationSubscription](docs/NotificationSubscription.md)
+ - [NotificationSubscriptionResponse](docs/NotificationSubscriptionResponse.md)
  - [Plan](docs/Plan.md)
  - [PlanCounty](docs/PlanCounty.md)
  - [PlanCountyBulk](docs/PlanCountyBulk.md)
+ - [PlanDeleted](docs/PlanDeleted.md)
+ - [PlanIdentifier](docs/PlanIdentifier.md)
+ - [PlanMedicare](docs/PlanMedicare.md)
+ - [PlanMedicareBulk](docs/PlanMedicareBulk.md)
+ - [PlanPricingMedicare](docs/PlanPricingMedicare.md)
  - [PlanSearchResponse](docs/PlanSearchResponse.md)
- - [PlanSearchResponseMeta](docs/PlanSearchResponseMeta.md)
- - [PlanSearchResult](docs/PlanSearchResult.md)
  - [PlanShowResponse](docs/PlanShowResponse.md)
- - [Pricing](docs/Pricing.md)
  - [Provider](docs/Provider.md)
  - [ProviderDetails](docs/ProviderDetails.md)
  - [ProviderGeocode](docs/ProviderGeocode.md)
+ - [ProviderNetworkEventNotification](docs/ProviderNetworkEventNotification.md)
  - [ProviderShowResponse](docs/ProviderShowResponse.md)
  - [ProvidersGeocodeResponse](docs/ProvidersGeocodeResponse.md)
  - [ProvidersSearchResponse](docs/ProvidersSearchResponse.md)
@@ -293,13 +353,15 @@ Class | Method | HTTP request | Description
  - [RequestPlanFindApplicant](docs/RequestPlanFindApplicant.md)
  - [RequestPlanFindDrugPackage](docs/RequestPlanFindDrugPackage.md)
  - [RequestPlanFindProvider](docs/RequestPlanFindProvider.md)
+ - [RequestProviderNotificationSubscription](docs/RequestProviderNotificationSubscription.md)
  - [RequestProvidersSearch](docs/RequestProvidersSearch.md)
+ - [RxCuiIdentifier](docs/RxCuiIdentifier.md)
+ - [RxCuiIdentifierSearchResponse](docs/RxCuiIdentifierSearchResponse.md)
  - [ServiceArea](docs/ServiceArea.md)
  - [ServiceAreaZipCounty](docs/ServiceAreaZipCounty.md)
  - [State](docs/State.md)
  - [StateNetworkSizeRequest](docs/StateNetworkSizeRequest.md)
  - [StateNetworkSizeResponse](docs/StateNetworkSizeResponse.md)
- - [VendoredPlanBulk](docs/VendoredPlanBulk.md)
  - [ZipCode](docs/ZipCode.md)
  - [ZipCountiesResponse](docs/ZipCountiesResponse.md)
  - [ZipCounty](docs/ZipCounty.md)

@@ -4,9 +4,65 @@ All URIs are relative to *https://api.vericred.com/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**create_network_comparisons**](NetworksApi.md#create_network_comparisons) | **POST** /networks/{id}/network_comparisons | Network Comparisons
 [**list_networks**](NetworksApi.md#list_networks) | **GET** /networks | Networks
 [**show_network**](NetworksApi.md#show_network) | **GET** /networks/{id} | Network Details
 
+
+# **create_network_comparisons**
+> NetworkComparisonResponse create_network_comparisons(id, body)
+
+Network Comparisons
+
+Compare provider counts in a given area between a base network and one or more comparison networks.  #### Comparing Networks Comparison of provider counts within a radius requires that you provide a `zip_code` and `radius` to use as a search area.  The response returns the total number of unique `Providers` in the Base `Network` (i.e. those who are not present in the Comparison `Network`), The number of unique `Provider`s in the Comparison `Network` (i.e. those who are not present in the Base `Network`), and the count of `Provider`s who are in *both* `Network`s
+
+### Example 
+```python
+from __future__ import print_statement
+import time
+import vericred_client
+from vericred_client.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: Vericred-Api-Key
+vericred_client.configuration.api_key['Vericred-Api-Key'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# vericred_client.configuration.api_key_prefix['Vericred-Api-Key'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = vericred_client.NetworksApi()
+id = 100001 # int | Primary key of the base network
+body = vericred_client.NetworkComparisonRequest() # NetworkComparisonRequest | 
+
+try: 
+    # Network Comparisons
+    api_response = api_instance.create_network_comparisons(id, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling NetworksApi->create_network_comparisons: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **int**| Primary key of the base network | 
+ **body** | [**NetworkComparisonRequest**](NetworkComparisonRequest.md)|  | 
+
+### Return type
+
+[**NetworkComparisonResponse**](NetworkComparisonResponse.md)
+
+### Authorization
+
+[Vericred-Api-Key](../README.md#Vericred-Api-Key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_networks**
 > NetworkSearchResponse list_networks(carrier_id, page=page, per_page=per_page)

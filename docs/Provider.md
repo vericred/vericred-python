@@ -26,6 +26,7 @@ Name | Type | Description | Notes
 **title** | **str** | Professional title for the provider (e.g. Dr). | [optional] 
 **type** | **str** | Type of NPI number (individual provider vs organization). | [optional] 
 **zip_code** | **str** | Postal code for the provider&#39;s address (e.g. 11215) | [optional] 
+**npis** | **list[int]** | The National Provider Index (NPI) numbers associated with this provider. | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
