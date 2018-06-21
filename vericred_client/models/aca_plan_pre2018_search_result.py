@@ -2457,7 +2457,7 @@ class ACAPlanPre2018SearchResult(object):
     def plan_calendar(self):
         """
         Gets the plan_calendar of this ACAPlanPre2018SearchResult.
-        Are deductibles and MOOPs reset on Dec-31 (\"calendar year\") or 365 days after enrollment date (\"plan year\")?
+        Are deductibles and MOOPs reset on Dec-31 (\"calendar year\"), 365 days after enrollment date (\"plan year\"), or are both options available (\"both\")?
 
         :return: The plan_calendar of this ACAPlanPre2018SearchResult.
         :rtype: str
@@ -2468,7 +2468,7 @@ class ACAPlanPre2018SearchResult(object):
     def plan_calendar(self, plan_calendar):
         """
         Sets the plan_calendar of this ACAPlanPre2018SearchResult.
-        Are deductibles and MOOPs reset on Dec-31 (\"calendar year\") or 365 days after enrollment date (\"plan year\")?
+        Are deductibles and MOOPs reset on Dec-31 (\"calendar year\"), 365 days after enrollment date (\"plan year\"), or are both options available (\"both\")?
 
         :param plan_calendar: The plan_calendar of this ACAPlanPre2018SearchResult.
         :type: str

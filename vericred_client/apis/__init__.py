@@ -5,6 +5,7 @@ from .drug_coverages_api import DrugCoveragesApi
 from .drug_packages_api import DrugPackagesApi
 from .drugs_api import DrugsApi
 from .formularies_api import FormulariesApi
+from .medical_plans_api import MedicalPlansApi
 from .network_sizes_api import NetworkSizesApi
 from .networks_api import NetworksApi
 from .plans_api import PlansApi

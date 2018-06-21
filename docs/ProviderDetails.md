@@ -14,7 +14,6 @@ Name | Type | Description | Notes
 **middle_name** | **str** | Middle name for the provider. | [optional] 
 **network_ids** | **list[int]** | Array of network ids | [optional] 
 **organization_name** | **str** | name for the providers of type: organization. | [optional] 
-**personal_phone** | **str** | Personal contact phone for the provider. | [optional] 
 **phone** | **str** | Office phone for the provider | [optional] 
 **presentation_name** | **str** | Preferred name for display (e.g. Dr. Francis White may prefer Dr. Frank White) | [optional] 
 **specialty** | **str** | Name of the primary Specialty | [optional] 

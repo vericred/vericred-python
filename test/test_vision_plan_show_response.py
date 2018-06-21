@@ -226,11 +226,11 @@ import unittest
 
 import vericred_client
 from vericred_client.rest import ApiException
-from vericred_client.models.applicant import Applicant
+from vericred_client.models.vision_plan_show_response import VisionPlanShowResponse
 
 
-class TestApplicant(unittest.TestCase):
-    """ Applicant unit test stubs """
+class TestVisionPlanShowResponse(unittest.TestCase):
+    """ VisionPlanShowResponse unit test stubs """
 
     def setUp(self):
         pass
@@ -238,11 +238,11 @@ class TestApplicant(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testApplicant(self):
+    def testVisionPlanShowResponse(self):
         """
-        Test Applicant
+        Test VisionPlanShowResponse
         """
-        model = vericred_client.models.applicant.Applicant()
+        model = vericred_client.models.vision_plan_show_response.VisionPlanShowResponse()
 
 
 if __name__ == '__main__':
